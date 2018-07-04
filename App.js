@@ -1,19 +1,61 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
+import { TouchableHighlight, Button, View, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 var type = "poop"
 class CuisineButton extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      text: this.props.text,
+      color: this.props.color
+    }
+  }
+
+  onPress = () => {
+    console.log(this.props.text);
+    this.setState({text: 'what'})
+    console.log(this.props.text);
+
+  }
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: this.props.color, borderRightWidth: this.props.border }}>
+      <TouchableHighlight onPress={() =>this.state.color = 'grey'} underlayColor='grey'
+        style={{ flex: 1, backgroundColor: this.props.color, borderRightWidth: this.props.border }}>
         <Text >
           {this.props.text}
         </Text>
-      </View>
+      </TouchableHighlight>
     );
   }
 }
+
+class CuisineChoice extends React.Component {
+  //props: {hidden: boolean, text: string}
+  //hidden means that there will a empty space in that spot
+  render() {
+    if (this.props.hidden === 'true') {
+      return (
+        <View style={{
+          flex: 1, backgroundColor: 'grey',
+          margin: 10, borderRadius: 20
+        }} />
+      )
+    }
+    else {
+      return (
+        <View style={{
+          flex: 1, backgroundColor: 'white',
+          margin: 10, borderRadius: 20, alignItems: 'center', justifyContent: 'center'
+        }}>
+          <Text> {this.props.text} </Text>
+        </View>
+      )
+    }
+
+  }
+}
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'FoodPick'
@@ -28,30 +70,37 @@ class HomeScreen extends React.Component {
           />
         </View>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'grey' }}>
-          <View style={{ flexDirection: 'row' ,alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text style={{fontSize:22}}> Result: {type} </Text> 
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 22 }}> Result: {type} </Text>
             <Button
-            title="Map TODO"
-            onPress={() => this.props.navigation.navigate('Details')}
-          />
+              title="Map TODO"
+              onPress={() => this.props.navigation.navigate('Details')}
+            />
           </View>
-          
-          
-
-
         </View>
+
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <View style={{ flex: 1, flexDirection: 'column' }}>
-
             <CuisineButton text="East Asian" color="powderblue" />
             <CuisineButton text="European" color="white" />
             <CuisineButton text="South East Asian" color="lightyellow" />
             <CuisineButton text="Fast Food" color="lightblue" />
             <CuisineButton text="Mexican" color="orchid" />
             <CuisineButton text="Indian" color="slategrey" />
-
           </View>
-          <View style={{ flex: 2, backgroundColor: 'skyblue' }}>
+
+          <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+            <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+              <CuisineChoice text='bat' hidden='false' />
+              <CuisineChoice text='cat' hidden='false' />
+              <CuisineChoice text='dat' hidden='false' />
+            </View>
+
+            <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+              <CuisineChoice text='mat' hidden='false' />
+              <CuisineChoice text='nat' hidden='false' />
+              <CuisineChoice text='' hidden='true' />
+            </View>
           </View>
         </View>
       </View>
@@ -66,10 +115,8 @@ class DetailsScreen extends React.Component {
       <View style={{ flex: 1 }}>
 
         <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'lightgrey' }}>
-            <Text>FoodPick</Text>
-          </View>
-          <View style={{ flex: 12, backgroundColor: 'white' }}>
+
+          <View style={{ flex: 13, backgroundColor: 'white' }}>
             <Button
               title="Go back"
               onPress={() => this.props.navigation.goBack()}
