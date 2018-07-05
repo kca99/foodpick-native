@@ -3,30 +3,69 @@ import { TouchableHighlight, Button, View, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 var type = "poop"
+
+//sidebar buttons
 class CuisineButton extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       text: this.props.text,
-      color: this.props.color
+      color: this.props.color,
+      prevcolor: ''
     }
   }
-
   onPress = () => {
-    console.log(this.props.text);
-    this.setState({text: 'what'})
-    console.log(this.props.text);
-
+    //console.log(this.state.color);
+    if (this.state.color != 'grey'){ 
+      this.setState({prevcolor: this.props.color,
+        color:'grey'})
+    }
+    else{
+      this.setState({
+        color:this.state.prevcolor})
+    }
+    var item = this.props.text;
+    this.props.onSelect(item);
+    //console.log(this.props.text);
   }
   render() {
     return (
-      <TouchableHighlight onPress={() =>this.state.color = 'grey'} underlayColor='grey'
-        style={{ flex: 1, backgroundColor: this.props.color, borderRightWidth: this.props.border }}>
+      <TouchableHighlight onPress={this.onPress} underlayColor='grey'
+        style={{ flex: 1, backgroundColor: this.state.color, borderRightWidth: this.props.border }}>
         <Text >
           {this.props.text}
         </Text>
       </TouchableHighlight>
     );
+  }
+}
+
+class ParentCuisine extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      item: ''
+    }
+  }
+
+  handleItem = (selectedItem) => {
+    this.setState({item: selectedItem},() =>{
+      console.log(this.state.item);
+    });
+    
+  }
+  
+  render(){
+    return(
+      <View style={{ flex: 1, flexDirection: 'column' }}>
+            <CuisineButton onSelect={this.handleItem} text="East Asian" color="powderblue" />
+            <CuisineButton onSelect={this.handleItem}  text="European" color="white" />
+            <CuisineButton onSelect={this.handleItem} text="South East Asian" color="lightyellow" />
+            <CuisineButton onSelect={this.handleItem}  text="Fast Food" color="lightblue" />
+            <CuisineButton onSelect={this.handleItem} text="Mexican" color="orchid" />
+            <CuisineButton onSelect={this.handleItem} text="Indian" color="slategrey" />
+    </View>
+    )
   }
 }
 
@@ -80,14 +119,7 @@ class HomeScreen extends React.Component {
         </View>
 
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
-          <View style={{ flex: 1, flexDirection: 'column' }}>
-            <CuisineButton text="East Asian" color="powderblue" />
-            <CuisineButton text="European" color="white" />
-            <CuisineButton text="South East Asian" color="lightyellow" />
-            <CuisineButton text="Fast Food" color="lightblue" />
-            <CuisineButton text="Mexican" color="orchid" />
-            <CuisineButton text="Indian" color="slategrey" />
-          </View>
+          <ParentCuisine />
 
           <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
             <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
@@ -113,9 +145,7 @@ class DetailsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-
         <View style={{ flex: 1 }}>
-
           <View style={{ flex: 13, backgroundColor: 'white' }}>
             <Button
               title="Go back"
