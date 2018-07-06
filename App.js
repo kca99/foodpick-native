@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableHighlight, Button, View, Text } from 'react-native';
+import { TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 var type = "poop"
@@ -80,29 +80,27 @@ class ParentCuisine extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <TouchableHighlight onPress={() => this.onPress('East Asian')} underlayColor='grey'
-          style={{ flex: 1, backgroundColor: this.state.tab1, borderRightWidth: this.props.border }}>
-          <Text >
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.tab1, borderRightWidth: this.props.border }}>
+          <Text style={styles.categoryText}>
             {category[0]}
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => this.onPress('European')} underlayColor='grey'
-          style={{ flex: 1, backgroundColor: this.state.tab2, borderRightWidth: this.props.border }}>
-          <Text >
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.tab2, borderRightWidth: this.props.border }}>
+          <Text style={styles.categoryText}>
             {category[1]}
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => this.onPress('South East Asian')} underlayColor='grey'
-          style={{ flex: 1, backgroundColor: this.state.tab3, borderRightWidth: this.props.border }}>
-          <Text >
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.tab3, borderRightWidth: this.props.border }}>
+          <Text style={styles.categoryText}>
             {category[2]}
-
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => this.onPress('Other')} underlayColor='grey'
-          style={{ flex: 1, backgroundColor: this.state.tab4, borderRightWidth: this.props.border }}>
-          <Text >
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.tab4, borderRightWidth: this.props.border }}>
+          <Text style={styles.categoryText}>
             {category[3]}
-
           </Text>
         </TouchableHighlight>
       </View>
@@ -128,7 +126,7 @@ class CuisineChoice extends React.Component {
           flex: 1, backgroundColor: 'white',
           margin: 10, borderRadius: 20, alignItems: 'center', justifyContent: 'center'
         }}>
-          <Text> {this.props.text} </Text>
+          <Text style={styles.optionText}> {this.props.text} </Text>
         </View>
       )
     }
@@ -148,7 +146,7 @@ class HomeScreen extends React.Component {
   handleChange = (item) => {
     //console.log("recieved", item);
     this.setState({
-      currentItem: item, 
+      currentItem: item,
     }, function () {
       console.log(item);
     })
@@ -156,15 +154,16 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+        <View style={StyleSheet.flatten([styles.container3of5, styles.whiteBg])}>
           <Button
             title="Randomize"
             onPress={() => this.props.navigation.navigate('Details')}
           />
         </View>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'grey' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 22 }}> Result: {type} </Text>
+        <View style={StyleSheet.flatten([styles.greyBg, styles.container1of5])}
+        /*StyleSheet.flatten tosses the two items into an array and returns it as one style*/>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Text style={styles.buttonText}> Result: {type} </Text>
             <Button
               title="Map TODO"
               onPress={() => this.props.navigation.navigate('Details')}
@@ -232,3 +231,61 @@ export default class App extends React.Component {
     return <RootStack />;
   }
 }
+
+//stylesheet starts ici
+//uhhh this is still tentative, I just put arbitrary values for now that scaled down
+//for font family, we can explore different sans-serifs
+const heading1 = 30;
+const heading2 = 24;
+const heading3 = 16;
+const para = 14;
+
+const styles = StyleSheet.create({
+  //flexbox grid sizes
+  container1of5:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  container3of5:{
+    flex: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  //fonts
+  baseText:{
+    fontFamily: 'Arial',
+  },
+
+  titleText:{
+    fontSize: heading1,
+    fontWeight: 'bold',
+  },
+
+  categoryText:{
+    fontSize: heading2,
+  },
+
+  buttonText:{
+    fontSize: heading3,
+  },
+
+  optionText:{
+    fontSize: heading3,
+  },
+
+  bodyText:{
+    fontSize: para,
+  },
+
+  //colors
+  greyBg:{
+     backgroundColor: 'grey',
+  },
+
+  whiteBg:{
+    backgroundColor: 'white',
+  }
+});
