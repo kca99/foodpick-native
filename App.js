@@ -22,7 +22,7 @@ class ParentCuisine extends React.Component {
   onPress(thing) {
     //console.log("onPress", thing);
     if (thing == 'East Asian') {
-      console.log("Entering 1");
+      //console.log("Entering 1");
       this.setState({
         item: thing,
         tab1: 'grey',
@@ -36,7 +36,7 @@ class ParentCuisine extends React.Component {
     }
 
     else if (thing == 'European') {
-      console.log("Entering 2");
+      //console.log("Entering 2");
       this.setState({
         item: thing,
         tab1: colors[0],
@@ -44,12 +44,12 @@ class ParentCuisine extends React.Component {
         tab3: colors[2],
         tab4: colors[3]
       }, () => {
-        console.log('new cuisine', this.state.item);
+        //console.log('new cuisine', this.state.item);
         this.props.onSelectCuisine(this.state.item);
       })
     }
     else if (thing == 'South East Asian') {
-      console.log("Entering 3");
+      //console.log("Entering 3");
       this.setState({
         item: thing,
         tab1: colors[0],
@@ -57,13 +57,13 @@ class ParentCuisine extends React.Component {
         tab3: 'grey',
         tab4: colors[3]
       }, () => {
-        console.log('new cuisine', this.state.item);
+        //console.log('new cuisine', this.state.item);
         this.props.onSelectCuisine(this.state.item);
       })
 
     }
     else if (thing == 'Other') {
-      console.log("Entering 4");
+      //console.log("Entering 4");
       this.setState({
         item: thing,
         tab1: colors[0],
@@ -71,7 +71,7 @@ class ParentCuisine extends React.Component {
         tab3: colors[2],
         tab4: 'grey'
       }, () => {
-        console.log('new cuisine', this.state.item);
+        //console.log('new cuisine', this.state.item);
         this.props.onSelectCuisine(this.state.item);
       })
     }
