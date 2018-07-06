@@ -132,12 +132,53 @@ class CuisineChoice extends React.Component {
     }
   }
 }
+class Rightside extends React.Component {
+  constructor(props){
+    super(props);
+  }  
 
+  render(){
+    if (this.props.item == "East Asian") {
+      return (
+        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='bat' hidden='false' />
+            <CuisineChoice text='cat' hidden='false' />
+            <CuisineChoice text='dat' hidden='false' />
+          </View>
+
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='mat' hidden='false' />
+            <CuisineChoice text='nat' hidden='false' />
+            <CuisineChoice text='' hidden='true' />
+          </View>
+        </View>
+      );
+    }
+    else{
+      return (
+        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='one' hidden='false' />
+            <CuisineChoice text='two' hidden='false' />
+            
+          </View>
+
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='three' hidden='false' />
+            <CuisineChoice text='four' hidden='false' />
+            
+          </View>
+        </View>
+      );
+    }
+  }
+}
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem: ''
+      currentItem: 'East Asian'
     }
   }
   static navigationOptions = {
@@ -162,7 +203,7 @@ class HomeScreen extends React.Component {
         </View>
         <View style={StyleSheet.flatten([styles.greyBg, styles.container1of5])}
         /*StyleSheet.flatten tosses the two items into an array and returns it as one style*/>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={styles.buttonText}> Result: {type} </Text>
             <Button
               title="Map TODO"
@@ -173,20 +214,7 @@ class HomeScreen extends React.Component {
 
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <ParentCuisine onSelectCuisine={this.handleChange} />
-
-          <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
-            <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-              <CuisineChoice text='bat' hidden='false' />
-              <CuisineChoice text='cat' hidden='false' />
-              <CuisineChoice text='dat' hidden='false' />
-            </View>
-
-            <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-              <CuisineChoice text='mat' hidden='false' />
-              <CuisineChoice text='nat' hidden='false' />
-              <CuisineChoice text='' hidden='true' />
-            </View>
-          </View>
+          <Rightside item={this.state.currentItem} />
         </View>
       </View>
     );
@@ -242,50 +270,50 @@ const para = 14;
 
 const styles = StyleSheet.create({
   //flexbox grid sizes
-  container1of5:{
+  container1of5: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  container3of5:{
+  container3of5: {
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   //fonts
-  baseText:{
+  baseText: {
     fontFamily: 'Arial',
   },
 
-  titleText:{
+  titleText: {
     fontSize: heading1,
     fontWeight: 'bold',
   },
 
-  categoryText:{
+  categoryText: {
     fontSize: heading2,
   },
 
-  buttonText:{
+  buttonText: {
     fontSize: heading3,
   },
 
-  optionText:{
+  optionText: {
     fontSize: heading3,
   },
 
-  bodyText:{
+  bodyText: {
     fontSize: para,
   },
 
   //colors
-  greyBg:{
-     backgroundColor: 'grey',
+  greyBg: {
+    backgroundColor: 'grey',
   },
 
-  whiteBg:{
+  whiteBg: {
     backgroundColor: 'white',
   }
 });
