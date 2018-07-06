@@ -3,68 +3,109 @@ import { TouchableHighlight, Button, View, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 var type = "poop"
+var colors = ["powderblue", "white", "lightyellow", "lightblue"];
+var category = ['East Asian', 'European', 'South East Asian', 'Other'];
 
-//sidebar buttons
-class CuisineButton extends React.Component {
-  constructor(props){
+class ParentCuisine extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      text: this.props.text,
-      color: this.props.color,
-      prevcolor: ''
+      item: 'East Asian',
+      tab1: colors[0],
+      tab2: colors[1],
+      tab3: colors[2],
+      tab4: colors[3],
     }
+    this.onPress = this.onPress.bind(this);
   }
-  onPress = () => {
-    //console.log(this.state.color);
-    if (this.state.color != 'grey'){ 
-      this.setState({prevcolor: this.props.color,
-        color:'grey'})
-    }
-    else{
+
+  onPress(thing) {
+    //console.log("onPress", thing);
+    if (thing == 'East Asian') {
+      console.log("Entering 1");
       this.setState({
-        color:this.state.prevcolor})
+        item: thing,
+        tab1: 'grey',
+        tab2: colors[1],
+        tab3: colors[2],
+        tab4: colors[3],
+      }, () => {
+        //console.log('new cuisine', this.state.item);
+        this.props.onSelectCuisine(this.state.item);
+      })
     }
-    var item = this.props.text;
-    this.props.onSelect(item);
-    //console.log(this.props.text);
+
+    else if (thing == 'European') {
+      console.log("Entering 2");
+      this.setState({
+        item: thing,
+        tab1: colors[0],
+        tab2: 'grey',
+        tab3: colors[2],
+        tab4: colors[3]
+      }, () => {
+        console.log('new cuisine', this.state.item);
+        this.props.onSelectCuisine(this.state.item);
+      })
+    }
+    else if (thing == 'South East Asian') {
+      console.log("Entering 3");
+      this.setState({
+        item: thing,
+        tab1: colors[0],
+        tab2: colors[1],
+        tab3: 'grey',
+        tab4: colors[3]
+      }, () => {
+        console.log('new cuisine', this.state.item);
+        this.props.onSelectCuisine(this.state.item);
+      })
+
+    }
+    else if (thing == 'Other') {
+      console.log("Entering 4");
+      this.setState({
+        item: thing,
+        tab1: colors[0],
+        tab2: colors[1],
+        tab3: colors[2],
+        tab4: 'grey'
+      }, () => {
+        console.log('new cuisine', this.state.item);
+        this.props.onSelectCuisine(this.state.item);
+      })
+    }
   }
   render() {
     return (
-      <TouchableHighlight onPress={this.onPress} underlayColor='grey'
-        style={{ flex: 1, backgroundColor: this.state.color, borderRightWidth: this.props.border }}>
-        <Text >
-          {this.props.text}
-        </Text>
-      </TouchableHighlight>
-    );
-  }
-}
-
-class ParentCuisine extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      item: ''
-    }
-  }
-
-  handleItem = (selectedItem) => {
-    this.setState({item: selectedItem},() =>{
-      console.log(this.state.item);
-    });
-    
-  }
-  
-  render(){
-    return(
       <View style={{ flex: 1, flexDirection: 'column' }}>
-            <CuisineButton onSelect={this.handleItem} text="East Asian" color="powderblue" />
-            <CuisineButton onSelect={this.handleItem}  text="European" color="white" />
-            <CuisineButton onSelect={this.handleItem} text="South East Asian" color="lightyellow" />
-            <CuisineButton onSelect={this.handleItem}  text="Fast Food" color="lightblue" />
-            <CuisineButton onSelect={this.handleItem} text="Mexican" color="orchid" />
-            <CuisineButton onSelect={this.handleItem} text="Indian" color="slategrey" />
-    </View>
+        <TouchableHighlight onPress={() => this.onPress('East Asian')} underlayColor='grey'
+          style={{ flex: 1, backgroundColor: this.state.tab1, borderRightWidth: this.props.border }}>
+          <Text >
+            {category[0]}
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.onPress('European')} underlayColor='grey'
+          style={{ flex: 1, backgroundColor: this.state.tab2, borderRightWidth: this.props.border }}>
+          <Text >
+            {category[1]}
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.onPress('South East Asian')} underlayColor='grey'
+          style={{ flex: 1, backgroundColor: this.state.tab3, borderRightWidth: this.props.border }}>
+          <Text >
+            {category[2]}
+
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.onPress('Other')} underlayColor='grey'
+          style={{ flex: 1, backgroundColor: this.state.tab4, borderRightWidth: this.props.border }}>
+          <Text >
+            {category[3]}
+
+          </Text>
+        </TouchableHighlight>
+      </View>
     )
   }
 }
@@ -91,14 +132,27 @@ class CuisineChoice extends React.Component {
         </View>
       )
     }
-
   }
 }
 
 class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentItem: ''
+    }
+  }
   static navigationOptions = {
     title: 'FoodPick'
   };
+  handleChange = (item) => {
+    //console.log("recieved", item);
+    this.setState({
+      currentItem: item, 
+    }, function () {
+      console.log(item);
+    })
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -119,7 +173,7 @@ class HomeScreen extends React.Component {
         </View>
 
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
-          <ParentCuisine />
+          <ParentCuisine onSelectCuisine={this.handleChange} />
 
           <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
             <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
@@ -136,7 +190,6 @@ class HomeScreen extends React.Component {
           </View>
         </View>
       </View>
-
     );
   }
 };
