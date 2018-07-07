@@ -6,6 +6,9 @@ var type = "poop"
 var colors = ["powderblue", "white", "lightyellow", "lightblue"];
 var category = ['East Asian', 'European', 'South East Asian', 'Other'];
 
+var array = [];
+var n = 0; 
+
 class ParentCuisine extends React.Component {
   constructor(props) {
     super(props);
@@ -111,6 +114,42 @@ class ParentCuisine extends React.Component {
 class CuisineChoice extends React.Component {
   //props: {hidden: boolean, text: string}
   //hidden means that there will a empty space in that spot
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      color: 'white'
+    }
+  }
+
+  onPress(item){
+    //console.log(item);
+    var found = 0;
+    for (var i = 0; i < n; i++) { //linear traversal TODO: binary search if you want
+      if (array[i] === this.props.text) { // duplicate
+        array.splice(i, 1);
+        n--;
+        found = 1;
+        //change state.color back to white
+        this.setState({
+          color: 'white'
+        }, () => {
+          console.log('color: ', this.state.color);
+        })
+      }
+    }
+    if (found === 0) {
+      array[n] = this.props.text;
+      n++;
+      //change state.color to lightyellow
+      this.setState({
+        color: 'red'
+      }, () => {
+        console.log('color: ', this.state.color);
+      })
+    }
+    console.log(array);
+  }
   render() {
     if (this.props.hidden === 'true') {
       return (
@@ -122,52 +161,80 @@ class CuisineChoice extends React.Component {
     }
     else {
       return (
-        <View style={{
-          flex: 1, backgroundColor: 'white',
+        <TouchableHighlight underlayColor='grey' onPress={() => this.onPress(this.props.text)} style={{
+          flex: 1, backgroundColor: this.state.color,
           margin: 10, borderRadius: 20, alignItems: 'center', justifyContent: 'center'
         }}>
-          <Text style={styles.optionText}> {this.props.text} </Text>
-        </View>
+          
+            <Text style={styles.optionText}> {this.props.text} </Text>
+        </TouchableHighlight>
       )
     }
   }
 }
-class Rightside extends React.Component {
-  constructor(props){
-    super(props);
-  }  
 
-  render(){
+class Rightside extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     if (this.props.item == "East Asian") {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-            <CuisineChoice text='bat' hidden='false' />
-            <CuisineChoice text='cat' hidden='false' />
-            <CuisineChoice text='dat' hidden='false' />
+            <CuisineChoice text='Taiwanese' hidden='false' />
+            <CuisineChoice text='Chinese' hidden='false' />
           </View>
 
           <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-            <CuisineChoice text='mat' hidden='false' />
-            <CuisineChoice text='nat' hidden='false' />
+            <CuisineChoice text='Japanese' hidden='false' />
+            <CuisineChoice text='Korean' hidden='false' />
+          </View>
+        </View>
+      );
+    }
+    else if (this.props.item == "European") {
+      return (
+        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='British' hidden='false' />
+            <CuisineChoice text='Greek' hidden='false' />
+          </View>
+
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='French' hidden='false' />
+            <CuisineChoice text='Mediterranean' hidden='false' />
+          </View>
+        </View>
+      );
+    }
+    else if (this.props.item == "South East Asian") {
+      return (
+        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='Vietnamese' hidden='false' />
+            <CuisineChoice text='Filipino' hidden='false' />
+          </View>
+
+          <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
+            <CuisineChoice text='Thai' hidden='false' />
             <CuisineChoice text='' hidden='true' />
           </View>
         </View>
       );
     }
-    else{
+    else if (this.props.item == "Other") {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-            <CuisineChoice text='one' hidden='false' />
-            <CuisineChoice text='two' hidden='false' />
-            
+            <CuisineChoice text='Fast Food' hidden='false' />
+            <CuisineChoice text='Mexican' hidden='false' />
           </View>
 
           <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-            <CuisineChoice text='three' hidden='false' />
-            <CuisineChoice text='four' hidden='false' />
-            
+            <CuisineChoice text='Indian' hidden='false' />
+            <CuisineChoice text='Middle Eastern' hidden='true' />
           </View>
         </View>
       );
