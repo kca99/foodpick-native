@@ -7,14 +7,14 @@ var colors = ["powderblue", "white", "lightyellow", "lightblue"];
 var category = ['East Asian', 'European', 'South East Asian', 'Other'];
 
 var array = [];
-var n = 0; 
+var n = 0;
 
 class ParentCuisine extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       item: 'East Asian',
-      tab1: colors[0],
+      tab1: 'grey',
       tab2: colors[1],
       tab3: colors[2],
       tab4: colors[3],
@@ -114,7 +114,7 @@ class ParentCuisine extends React.Component {
 class CuisineChoice extends React.Component {
   //props: {hidden: boolean, text: string}
   //hidden means that there will a empty space in that spot
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -122,7 +122,7 @@ class CuisineChoice extends React.Component {
     }
   }
 
-  onPress(item){
+  onPress(item) {
     //console.log(item);
     var found = 0;
     for (var i = 0; i < n; i++) { //linear traversal TODO: binary search if you want
@@ -131,22 +131,14 @@ class CuisineChoice extends React.Component {
         n--;
         found = 1;
         //change state.color back to white
-        this.setState({
-          color: 'white'
-        }, () => {
-          console.log('color: ', this.state.color);
-        })
+
       }
     }
     if (found === 0) {
       array[n] = this.props.text;
       n++;
       //change state.color to lightyellow
-      this.setState({
-        color: 'red'
-      }, () => {
-        console.log('color: ', this.state.color);
-      })
+
     }
     console.log(array);
   }
@@ -165,8 +157,7 @@ class CuisineChoice extends React.Component {
           flex: 1, backgroundColor: this.state.color,
           margin: 10, borderRadius: 20, alignItems: 'center', justifyContent: 'center'
         }}>
-          
-            <Text style={styles.optionText}> {this.props.text} </Text>
+          <Text style={styles.optionText}> {this.props.text} </Text>
         </TouchableHighlight>
       )
     }
@@ -176,19 +167,27 @@ class CuisineChoice extends React.Component {
 class Rightside extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      EastAsia: ['white', 'white']
+    }
   }
 
+  onChange(inState, index) {
+    var a = "this.state." + inState;
+    console.log(a);
+
+  }
   render() {
     if (this.props.item == "East Asian") {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-            <CuisineChoice text='Taiwanese' hidden='false' />
+            <CuisineChoice onPress = {this.onChange('EastAsia',0)} text='Taiwanese' hidden='false' />
             <CuisineChoice text='Chinese' hidden='false' />
           </View>
 
           <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-            <CuisineChoice text='Japanese' hidden='false' />
+            <CuisineChoice text='Japanese' hidden='false'/>
             <CuisineChoice text='Korean' hidden='false' />
           </View>
         </View>
@@ -198,7 +197,7 @@ class Rightside extends React.Component {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={{ flex: 1, backgroundColor: 'grey', flexDirection: 'column' }}>
-            <CuisineChoice text='British' hidden='false' />
+            <CuisineChoice text='British' hidden='false'  />
             <CuisineChoice text='Greek' hidden='false' />
           </View>
 
