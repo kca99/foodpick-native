@@ -7,8 +7,12 @@ var colors = ["lightgrey", "lightgrey", "lightgrey", "lightgrey"];
 var category = ['East Asian', 'European', 'South East Asian', 'Other'];
 
 var outputArray = [];
-var tempArray = [];
 var n = 0;
+
+var EastOptions = ['Taiwanese', 'Chinese', 'Japanese', 'Korean'];
+var EuroOptions = ['British', 'Greek', 'French', 'Mediterranean'];
+var SEAOptions = ['Vietnamese', 'Filipino', 'Thai', ''];
+var OtherOptions = ['Fast Food', 'Mexican', 'Indian', 'Middle Eastern'];
 
 var EastAsiaColorTrack = ['white', 'white', 'white', 'white'];
 var EuropeanColorTrack = ['white', 'white', 'white', 'white'];
@@ -177,19 +181,18 @@ class Options extends React.Component {
   }
 }
 
-function renderRight(array, state){
-
+function renderRight(array, colorArray, state){
   render(){
     return(
       <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
         <View style={styles.vertColRightside}>
-          <Options text='Taiwanese' hidden='false' />
-          <Options text='Chinese' hidden='false' />
+          <Options text= array[0] hidden= state[0] color = colorArray[0] />
+          <Options text= array[1] hidden= state[1] color = colorArray[1]/>
         </View>
 
         <View style={styles.vertColRightside}>
-          <Options text='Japanese' hidden='false'/>
-          <Options text='Korean' hidden='false' />
+          <Options text= array[2] hidden= state[2] color = colorArray[2]/>
+          <Options text= array[3] hidden= state[3] color = colorArray[3]/>
         </View>
       </View>
     )
@@ -209,67 +212,27 @@ class Rightside extends React.Component {
         if(array[i] == 'Japanese'){ // in array, add color
           EastAsiaColorTrack[2] = 'black';
         }
-        if(array[i] == 'Chinese'){ // in array, add color
+        if(array[i] == 'Korean'){ // in array, add color
           EastAsiaColorTrack[3] = 'black';
         }
       }
       return (
-        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
-          <View style={styles.vertColRightside}>
-            <Options text='Taiwanese' hidden='false' color= {EastAsiaColorTrack[0]}/>
-            <Options text='Chinese' hidden='false' color= {EastAsiaColorTrack[1]}/>
-          </View>
-
-          <View style={styles.vertColRightside}>
-            <Options text='Japanese' hidden='false'color= {EastAsiaColorTrack[2]}/>
-            <Options text='Korean' hidden='false' color= {EastAsiaColorTrack[3]}/>
-          </View>
-        </View>
+        <renderRight(EastOptions, EastAsiaColorTrack, [false, false, false, false]) />
       );
     }
     else if (this.props.item == "European") {
       return (
-        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
-          <View style={styles.vertColRightside}>
-            <Options text='British' hidden='false'  />
-            <Options text='Greek' hidden='false' />
-          </View>
-
-          <View style={styles.vertColRightside}>
-            <Options text='French' hidden='false' />
-            <Options text='Mediterranean' hidden='false' />
-          </View>
-        </View>
+        <renderRight(EuroOptions, EuropeanColorTrack, [false, false, false, false]) />
       );
     }
     else if (this.props.item == "South East Asian") {
       return (
-        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
-          <View style={styles.vertColRightside}>
-            <Options text='Vietnamese' hidden='false' />
-            <Options text='Filipino' hidden='false' />
-          </View>
-
-          <View style={styles.vertColRightside}>
-            <Options text='Thai' hidden='false' />
-            <Options text='' hidden='true' />
-          </View>
-        </View>
+        <renderRight(SEAOptions, SEAColorTrack, [false, false, false, true]) />
       );
     }
     else if (this.props.item == "Other") {
       return (
-        <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
-          <View style={styles.vertColRightside}>
-            <Options text='Fast Food' hidden='false' />
-            <Options text='Mexican' hidden='false' />
-          </View>
-
-          <View style={styles.vertColRightside}>
-            <Options text='Indian' hidden='false' />
-            <Options text='Middle Eastern' hidden='true' />
-          </View>
-        </View>
+        <renderRight(OtherOptions, OtherColorTrack, [false, false, false, false]) />
       );
     }
   }
