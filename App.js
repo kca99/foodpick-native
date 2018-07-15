@@ -181,22 +181,21 @@ class Options extends React.Component {
   }
 }
 
-function renderRight(array, colorArray, state){
-  render(){
+function RenderRight(array, colorArray, state){
     return(
       <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
         <View style={styles.vertColRightside}>
-          <Options text= array[0] hidden= state[0] color = colorArray[0] />
-          <Options text= array[1] hidden= state[1] color = colorArray[1]/>
+          <Options text= {array[0]} hidden= {state[0]} color = {colorArray[0]} />
+          <Options text= {array[1]} hidden= {state[1]} color = {colorArray[1]}/>
         </View>
 
         <View style={styles.vertColRightside}>
-          <Options text= array[2] hidden= state[2] color = colorArray[2]/>
-          <Options text= array[3] hidden= state[3] color = colorArray[3]/>
+          <Options text= {array[2]} hidden= {state[2]} color = {colorArray[2]}/>
+          <Options text= {array[3]} hidden= {state[3]} color = {colorArray[3]} />
         </View>
       </View>
     )
-  }
+  
 }
 
 class Rightside extends React.Component {
@@ -217,7 +216,7 @@ class Rightside extends React.Component {
         }
       }
       return (
-        <renderRight(EastOptions, EastAsiaColorTrack, [false, false, false, false]) />
+        < RenderRight(EastOptions, EastAsiaColorTrack, [false, false, false, false]) />
       );
     }
     else if (this.props.item == "European") {
