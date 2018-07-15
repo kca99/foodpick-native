@@ -118,8 +118,8 @@ class Options extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: 'white',
-      backgroundColor: 'white'
+      myButtonColor: '',
+      myButtonTextColor: ''
     }
   }
 
@@ -171,22 +171,16 @@ class Options extends React.Component {
 class Rightside extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      EastAsia: ['white', 'white']
-    }
+    
   }
 
-  onChange(inState, index) {
-    var a = "this.state." + inState;
-    console.log(a);
-
-  }
+  
   render() {
     if (this.props.item == "East Asian") {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={styles.vertColRightside}>
-            <Options onPress = {this.onChange('EastAsia',0)} text='Taiwanese' hidden='false' />
+            <Options text='Taiwanese' hidden='false' />
             <Options text='Chinese' hidden='false' />
           </View>
 
@@ -244,6 +238,7 @@ class Rightside extends React.Component {
     }
   }
 }
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
