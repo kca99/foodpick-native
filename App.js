@@ -195,7 +195,7 @@ function RenderRight(array, colorArray, state){
         </View>
       </View>
     )
-  
+
 }
 
 class Rightside extends React.Component {
@@ -221,17 +221,17 @@ class Rightside extends React.Component {
     }
     else if (this.props.item == "European") {
       return (
-        <renderRight(EuroOptions, EuropeanColorTrack, [false, false, false, false]) />
+        <RenderRight(EuroOptions, EuropeanColorTrack, [false, false, false, false]) />
       );
     }
     else if (this.props.item == "South East Asian") {
       return (
-        <renderRight(SEAOptions, SEAColorTrack, [false, false, false, true]) />
+        <RenderRight(SEAOptions, SEAColorTrack, [false, false, false, true]) />
       );
     }
     else if (this.props.item == "Other") {
       return (
-        <renderRight(OtherOptions, OtherColorTrack, [false, false, false, false]) />
+        <RenderRight(OtherOptions, OtherColorTrack, [false, false, false, false]) />
       );
     }
   }
