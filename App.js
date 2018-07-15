@@ -177,67 +177,6 @@ class Options extends React.Component {
   }
 }
 
-
-class Options1 extends React.Component {
-  //props: {hidden: boolean, text: string}
-  //hidden means that there will a empty space in that spot
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      myButtonColor: 'white',
-      myButtonTextColor: 'black',
-      backgroundColor: 'white'
-    }
-  }
-
-  onPress(item) {
-    //console.log(item);
-    var found = 0;
-
-    for (var i = 0; i < n; i++) { //linear traversal TODO: binary search if you want
-      if (array[i] === this.props.text) { // duplicate
-        array.splice(i, 1);
-        n--;
-        found = 1;
-        //change state.color back to white
-        this.setState({
-          myButtonColor: 'transparent',
-          myButtonTextColor: 'black'
-        })
-      }
-    }
-
-    if (found === 0) {
-      array[n] = this.props.text;
-      n++;
-      //change state.color to lightyellow
-      this.setState({
-        myButtonColor: 'blue',
-        myButtonTextColor: 'white'
-      })
-    }
-    console.log(array);
-  }
-  render() {
-    if (this.props.hidden === 'true') {
-      return (
-        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonColor}]} />
-      )
-    }
-    else {
-      return (
-        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.backgroundColor}]}>
-          <TouchableHighlight underlayColor='lightblue' onPress={() => this.onPress(this.props.text)}
-          style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonColor}]}>
-            <Text style={[styles.optionText, {color: this.state.myButtonTextColor}]}> {this.props.text} </Text>
-          </TouchableHighlight>
-        </View>
-      )
-    }
-  }
-}
-
 function renderRight(array, state){
 
   render(){
@@ -292,13 +231,13 @@ class Rightside extends React.Component {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={styles.vertColRightside}>
-            <Options1 text='British' hidden='false'  />
-            <Options1 text='Greek' hidden='false' />
+            <Options text='British' hidden='false'  />
+            <Options text='Greek' hidden='false' />
           </View>
 
           <View style={styles.vertColRightside}>
-            <Options1 text='French' hidden='false' />
-            <Options1 text='Mediterranean' hidden='false' />
+            <Options text='French' hidden='false' />
+            <Options text='Mediterranean' hidden='false' />
           </View>
         </View>
       );
