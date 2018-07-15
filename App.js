@@ -119,7 +119,8 @@ class Options extends React.Component {
     super(props);
     this.state = {
       myButtonColor: 'white',
-      myButtonTextColor: 'black'
+      myButtonTextColor: 'black',
+      backgroundColor: 'white'
     }
   }
 
@@ -159,7 +160,7 @@ class Options extends React.Component {
     }
     else {
       return (
-        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonTextColor}]}>
+        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.backgroundColor}]}>
           <TouchableHighlight underlayColor='lightblue' onPress={() => this.onPress(this.props.text)}
           style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonColor}]}>
             <Text style={[styles.optionText, {color: this.state.myButtonTextColor}]}> {this.props.text} </Text>
@@ -263,6 +264,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={StyleSheet.flatten([styles.container3of5, styles.whiteBg])}>
+          <Text> {array.join(', ')} </Text>
           <Button
             title="Randomize"
             onPress={() => this.props.navigation.navigate('Details')}
