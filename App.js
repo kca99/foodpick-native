@@ -216,22 +216,30 @@ class Rightside extends React.Component {
         }
       }
       return (
-        < RenderRight(EastOptions, EastAsiaColorTrack, [false, false, false, false]) />
+        <div>
+          {RenderRight(EastOptions, EastAsiaColorTrack, [false, false, false, false])}
+        </div>
       );
     }
     else if (this.props.item == "European") {
       return (
-        <RenderRight(EuroOptions, EuropeanColorTrack, [false, false, false, false]) />
+        <div>
+          {RenderRight(EuroOptions, EuropeanColorTrack, [false, false, false, false])}
+        </div>
       );
     }
     else if (this.props.item == "South East Asian") {
       return (
-        <RenderRight(SEAOptions, SEAColorTrack, [false, false, false, true]) />
+        <div>
+          {RenderRight(SEAOptions, SEAColorTrack, [false, false, false, true])}
+        </div>
       );
     }
     else if (this.props.item == "Other") {
       return (
-        <RenderRight(OtherOptions, OtherColorTrack, [false, false, false, false]) />
+        <div>
+          {RenderRight(OtherOptions, OtherColorTrack, [false, false, false, false])}
+        </div>
       );
     }
   }
