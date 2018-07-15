@@ -6,8 +6,10 @@ var type = "poop"
 var colors = ["lightgrey", "lightgrey", "lightgrey", "lightgrey"];
 var category = ['East Asian', 'European', 'South East Asian', 'Other'];
 
-var array = [];
+var outputArray = [];
+var tempArray = [];
 var n = 0;
+
 
 class Tabs extends React.Component {
   constructor(props) {
@@ -129,8 +131,8 @@ class Options extends React.Component {
     var found = 0;
 
     for (var i = 0; i < n; i++) { //linear traversal TODO: binary search if you want
-      if (array[i] === this.props.text) { // duplicate
-        array.splice(i, 1);
+      if (outputArray[i] === this.props.text) { // duplicate
+        outputArray.splice(i, 1);
         n--;
         found = 1;
         //change state.color back to white
@@ -142,7 +144,7 @@ class Options extends React.Component {
     }
 
     if (found === 0) {
-      array[n] = this.props.text;
+      outputArray[n] = this.props.text;
       n++;
       //change state.color to lightyellow
       this.setState({
@@ -150,7 +152,7 @@ class Options extends React.Component {
         myButtonTextColor: 'white'
       })
     }
-    console.log(array);
+    console.log(outputArray);
   }
   render() {
     if (this.props.hidden === 'true') {
@@ -171,13 +173,31 @@ class Options extends React.Component {
   }
 }
 
+function renderRight(array, state){
+  
+  render(){
+    return(
+      <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+        <View style={styles.vertColRightside}>
+          <Options text='Taiwanese' hidden='false' />
+          <Options text='Chinese' hidden='false' />
+        </View>
+
+        <View style={styles.vertColRightside}>
+          <Options text='Japanese' hidden='false'/>
+          <Options text='Korean' hidden='false' />
+        </View>
+      </View>
+    )
+  }
+}
+
 class Rightside extends React.Component {
   constructor(props) {
     super(props);
-    
+
   }
 
-  
   render() {
     if (this.props.item == "East Asian") {
       return (
@@ -264,14 +284,14 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={StyleSheet.flatten([styles.container3of5, styles.whiteBg])}>
-          <Text> {array.join(', ')} </Text>
+          <Text> {outputArray.join(', ')} </Text>
           <Button
             title="Randomize"
             onPress={() => this.props.navigation.navigate('Details')}
           />
         </View>
         <View style={StyleSheet.flatten([styles.greyBg, styles.container1of5])}
-        /*StyleSheet.flatten tosses the two items into an array and returns it as one style*/>
+        /*StyleSheet.flatten tosses the two items into an outputArray and returns it as one style*/>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={styles.buttonText}> Result: {type} </Text>
             <Button
