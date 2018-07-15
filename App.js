@@ -118,14 +118,15 @@ class Options extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myButtonColor: '',
-      myButtonTextColor: ''
+      myButtonColor: 'white',
+      myButtonTextColor: 'black'
     }
   }
 
   onPress(item) {
     //console.log(item);
     var found = 0;
+
     for (var i = 0; i < n; i++) { //linear traversal TODO: binary search if you want
       if (array[i] === this.props.text) { // duplicate
         array.splice(i, 1);
@@ -138,6 +139,7 @@ class Options extends React.Component {
         })
       }
     }
+
     if (found === 0) {
       array[n] = this.props.text;
       n++;
@@ -157,7 +159,7 @@ class Options extends React.Component {
     }
     else {
       return (
-        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.backgroundColor}]}>
+        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonTextColor}]}>
           <TouchableHighlight underlayColor='lightblue' onPress={() => this.onPress(this.props.text)}
           style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonColor}]}>
             <Text style={[styles.optionText, {color: this.state.myButtonTextColor}]}> {this.props.text} </Text>
