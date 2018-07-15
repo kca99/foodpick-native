@@ -9,7 +9,7 @@ var category = ['East Asian', 'European', 'South East Asian', 'Other'];
 var array = [];
 var n = 0;
 
-class ParentCuisine extends React.Component {
+class Tabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -111,7 +111,7 @@ class ParentCuisine extends React.Component {
   }
 }
 
-class CuisineChoice extends React.Component {
+class Options extends React.Component {
   //props: {hidden: boolean, text: string}
   //hidden means that there will a empty space in that spot
 
@@ -186,13 +186,13 @@ class Rightside extends React.Component {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={styles.vertColRightside}>
-            <CuisineChoice onPress = {this.onChange('EastAsia',0)} text='Taiwanese' hidden='false' />
-            <CuisineChoice text='Chinese' hidden='false' />
+            <Options onPress = {this.onChange('EastAsia',0)} text='Taiwanese' hidden='false' />
+            <Options text='Chinese' hidden='false' />
           </View>
 
           <View style={styles.vertColRightside}>
-            <CuisineChoice text='Japanese' hidden='false'/>
-            <CuisineChoice text='Korean' hidden='false' />
+            <Options text='Japanese' hidden='false'/>
+            <Options text='Korean' hidden='false' />
           </View>
         </View>
       );
@@ -201,13 +201,13 @@ class Rightside extends React.Component {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={styles.vertColRightside}>
-            <CuisineChoice text='British' hidden='false'  />
-            <CuisineChoice text='Greek' hidden='false' />
+            <Options text='British' hidden='false'  />
+            <Options text='Greek' hidden='false' />
           </View>
 
           <View style={styles.vertColRightside}>
-            <CuisineChoice text='French' hidden='false' />
-            <CuisineChoice text='Mediterranean' hidden='false' />
+            <Options text='French' hidden='false' />
+            <Options text='Mediterranean' hidden='false' />
           </View>
         </View>
       );
@@ -216,13 +216,13 @@ class Rightside extends React.Component {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={styles.vertColRightside}>
-            <CuisineChoice text='Vietnamese' hidden='false' />
-            <CuisineChoice text='Filipino' hidden='false' />
+            <Options text='Vietnamese' hidden='false' />
+            <Options text='Filipino' hidden='false' />
           </View>
 
           <View style={styles.vertColRightside}>
-            <CuisineChoice text='Thai' hidden='false' />
-            <CuisineChoice text='' hidden='true' />
+            <Options text='Thai' hidden='false' />
+            <Options text='' hidden='true' />
           </View>
         </View>
       );
@@ -231,13 +231,13 @@ class Rightside extends React.Component {
       return (
         <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
           <View style={styles.vertColRightside}>
-            <CuisineChoice text='Fast Food' hidden='false' />
-            <CuisineChoice text='Mexican' hidden='false' />
+            <Options text='Fast Food' hidden='false' />
+            <Options text='Mexican' hidden='false' />
           </View>
 
           <View style={styles.vertColRightside}>
-            <CuisineChoice text='Indian' hidden='false' />
-            <CuisineChoice text='Middle Eastern' hidden='true' />
+            <Options text='Indian' hidden='false' />
+            <Options text='Middle Eastern' hidden='true' />
           </View>
         </View>
       );
@@ -283,7 +283,7 @@ class HomeScreen extends React.Component {
         </View>
 
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
-          <ParentCuisine onSelectCuisine={this.handleChange} />
+          <Tabs onSelectCuisine={this.handleChange} />
           <Rightside item={this.state.currentItem} />
         </View>
       </View>
