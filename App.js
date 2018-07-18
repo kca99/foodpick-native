@@ -3,7 +3,6 @@ import { TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native
 import { createStackNavigator } from 'react-navigation';
 
 var type = "poop"
-var colors = ["lightgrey", "lightgrey", "lightgrey", "lightgrey"];
 var category = ['East Asian', 'European', 'South East Asian', 'Other'];
 
 var outputArray = [];
@@ -25,9 +24,9 @@ class Tabs extends React.Component {
     this.state = {
       item: 'East Asian',
       tab1: 'skyblue',
-      tab2: colors[1],
-      tab3: colors[2],
-      tab4: colors[3],
+      tab2: 'lightgrey',
+      tab3: 'lightgrey',
+      tab4: 'lightgrey'],
     }
     this.onPress = this.onPress.bind(this);
   }
@@ -39,9 +38,9 @@ class Tabs extends React.Component {
       this.setState({
         item: thing,
         tab1: 'skyblue',
-        tab2: colors[1],
-        tab3: colors[2],
-        tab4: colors[3],
+        tab2: 'lightgrey',
+        tab3: 'lightgrey',
+        tab4: 'lightgrey',
       }, () => {
         //console.log('new cuisine', this.state.item);
         this.props.onSelectCuisine(this.state.item);
@@ -52,10 +51,10 @@ class Tabs extends React.Component {
       //console.log("Entering 2");
       this.setState({
         item: thing,
-        tab1: colors[0],
+        tab1: 'lightgrey',
         tab2: 'skyblue',
-        tab3: colors[2],
-        tab4: colors[3]
+        tab3: 'lightgrey',
+        tab4: 'lightgrey'
       }, () => {
         //console.log('new cuisine', this.state.item);
         this.props.onSelectCuisine(this.state.item);
@@ -65,10 +64,10 @@ class Tabs extends React.Component {
       //console.log("Entering 3");
       this.setState({
         item: thing,
-        tab1: colors[0],
-        tab2: colors[1],
+        tab1: 'lightgrey',
+        tab2: 'lightgrey',
         tab3: 'skyblue',
-        tab4: colors[3]
+        tab4: 'lightgrey'
       }, () => {
         //console.log('new cuisine', this.state.item);
         this.props.onSelectCuisine(this.state.item);
@@ -79,9 +78,9 @@ class Tabs extends React.Component {
       //console.log("Entering 4");
       this.setState({
         item: thing,
-        tab1: colors[0],
-        tab2: colors[1],
-        tab3: colors[2],
+        tab1: 'lightgrey',
+        tab2: 'lightgrey',
+        tab3: 'lightgrey',
         tab4: 'skyblue'
       }, () => {
         //console.log('new cuisine', this.state.item);
@@ -128,9 +127,7 @@ class Options extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myButtonColor: 'white',
-      myButtonTextColor: 'black',
-      backgroundColor: 'white'
+      myButtonTextColor: 'black'
     }
   }
 
@@ -145,7 +142,6 @@ class Options extends React.Component {
         found = 1;
         //change state.color back to white
         this.setState({
-          myButtonColor: 'transparent',
           myButtonTextColor: 'black'
         })
       }
@@ -156,7 +152,6 @@ class Options extends React.Component {
       n++;
       //change state.color to lightyellow
       this.setState({
-        myButtonColor: 'blue',
         myButtonTextColor: 'white'
       })
     }
@@ -165,14 +160,14 @@ class Options extends React.Component {
   render() {
     if (this.props.hidden === 'true') {
       return (
-        <View style={[styles.buttonTypeOfFood, { backgroundColor: this.state.myButtonColor }]} />
+        <View style={[styles.buttonTypeOfFood, { backgroundColor: this.props.color}]} />
       )
     }
     else {
       return (
-        <View style={[styles.buttonTypeOfFood, { backgroundColor: this.state.backgroundColor }]}>
+        <View style={[styles.buttonTypeOfFood, { backgroundColor: this.props.color }]}>
           <TouchableHighlight underlayColor='lightblue' onPress={() => this.onPress(this.props.text)}
-            style={[styles.buttonTypeOfFood, { backgroundColor: this.state.myButtonColor }]}>
+            style={[styles.buttonTypeOfFood, { backgroundColor: this.props.color }]}>
             <Text style={[styles.optionText, { color: this.state.myButtonTextColor }]}> {this.props.text} </Text>
           </TouchableHighlight>
         </View>
@@ -199,6 +194,7 @@ function RenderRight(props) {
 }
 
 class Rightside extends React.Component {
+  //button colour selected: blue, default: white
   render() {
     if (this.props.item == "East Asian") {
       for (var i = 0; i < n; i++) {
