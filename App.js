@@ -181,17 +181,17 @@ class Options extends React.Component {
   }
 }
 
-function RenderRight(array, colorArray, state){
+function RenderRight(props){
     return(
       <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
         <View style={styles.vertColRightside}>
-          <Options text= {array[0]} hidden= {state[0]} color = {colorArray[0]} />
-          <Options text= {array[1]} hidden= {state[1]} color = {colorArray[1]}/>
+          <Options text= {props.selectedArray[0]} hidden= {props.state[0]} color = {props.colorArray[0]} />
+          <Options text= {props.selectedArray[1]} hidden= {props.state[1]} color = {props.colorArray[1]}/>
         </View>
 
         <View style={styles.vertColRightside}>
-          <Options text= {array[2]} hidden= {state[2]} color = {colorArray[2]}/>
-          <Options text= {array[3]} hidden= {state[3]} color = {colorArray[3]} />
+          <Options text= {props.selectedArray[2]} hidden= {props.state[2]} color = {props.colorArray[2]}/>
+          <Options text= {props.selectedArray[3]} hidden= {props.state[3]} color = {props.colorArray[3]} />
         </View>
       </View>
     )
@@ -201,6 +201,7 @@ function RenderRight(array, colorArray, state){
 class Rightside extends React.Component {
   render() {
     if (this.props.item == "East Asian") {
+      
       for (var i = 0; i < n; i++){
         if(array[i] == 'Taiwanese'){ // in array, add color
           EastAsiaColorTrack[0] = 'black';
@@ -216,30 +217,24 @@ class Rightside extends React.Component {
         }
       }
       return (
-        <div>
-          {RenderRight(EastOptions, EastAsiaColorTrack, [false, false, false, false])}
-        </div>
+        
+          <RenderRight selectedArray = {EastOptions}  colorArray = {EastAsiaColorTrack} state= {[false, false, false, false]} />
+        
       );
     }
     else if (this.props.item == "European") {
       return (
-        <div>
-          {RenderRight(EuroOptions, EuropeanColorTrack, [false, false, false, false])}
-        </div>
+        <RenderRight selectedArray = {EuroOptions}  colorArray = {EuropeanColorTrack} state= {[false, false, false, false]} />
       );
     }
     else if (this.props.item == "South East Asian") {
       return (
-        <div>
-          {RenderRight(SEAOptions, SEAColorTrack, [false, false, false, true])}
-        </div>
+        <RenderRight selectedArray = {SEAOptions}  colorArray = {SEAColorTrack} state= {[false, false, false, true]} />        
       );
     }
     else if (this.props.item == "Other") {
       return (
-        <div>
-          {RenderRight(OtherOptions, OtherColorTrack, [false, false, false, false])}
-        </div>
+        <RenderRight selectedArray = {OtherOptions}  colorArray = {OtherColorTrack} state= {[false, false, false, false]} />        
       );
     }
   }
