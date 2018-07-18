@@ -93,25 +93,25 @@ class Tabs extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <TouchableHighlight onPress={() => this.onPress('East Asian')} underlayColor='grey'
-          style={[styles.buttonCategory, {backgroundColor: this.state.tab1}]}>
+          style={[styles.buttonCategory, { backgroundColor: this.state.tab1 }]}>
           <Text style={styles.categoryText}>
             {category[0]}
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => this.onPress('European')} underlayColor='grey'
-          style={[styles.buttonCategory, {backgroundColor: this.state.tab2}]}>
+          style={[styles.buttonCategory, { backgroundColor: this.state.tab2 }]}>
           <Text style={styles.categoryText}>
             {category[1]}
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => this.onPress('South East Asian')} underlayColor='grey'
-          style={[styles.buttonCategory, {backgroundColor: this.state.tab3}]}>
+          style={[styles.buttonCategory, { backgroundColor: this.state.tab3 }]}>
           <Text style={styles.categoryText}>
             {category[2]}
           </Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => this.onPress('Other')} underlayColor='grey'
-          style={[styles.buttonCategory, {backgroundColor: this.state.tab4}]}>
+          style={[styles.buttonCategory, { backgroundColor: this.state.tab4 }]}>
           <Text style={styles.categoryText}>
             {category[3]}
           </Text>
@@ -165,15 +165,15 @@ class Options extends React.Component {
   render() {
     if (this.props.hidden === 'true') {
       return (
-        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonColor}]} />
+        <View style={[styles.buttonTypeOfFood, { backgroundColor: this.state.myButtonColor }]} />
       )
     }
     else {
       return (
-        <View style={[styles.buttonTypeOfFood, {backgroundColor: this.state.backgroundColor}]}>
+        <View style={[styles.buttonTypeOfFood, { backgroundColor: this.state.backgroundColor }]}>
           <TouchableHighlight underlayColor='lightblue' onPress={() => this.onPress(this.props.text)}
-          style={[styles.buttonTypeOfFood, {backgroundColor: this.state.myButtonColor}]}>
-            <Text style={[styles.optionText, {color: this.state.myButtonTextColor}]}> {this.props.text} </Text>
+            style={[styles.buttonTypeOfFood, { backgroundColor: this.state.myButtonColor }]}>
+            <Text style={[styles.optionText, { color: this.state.myButtonTextColor }]}> {this.props.text} </Text>
           </TouchableHighlight>
         </View>
       )
@@ -181,60 +181,59 @@ class Options extends React.Component {
   }
 }
 
-function RenderRight(props){
-    return(
-      <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
-        <View style={styles.vertColRightside}>
-          <Options text= {props.selectedArray[0]} hidden= {props.state[0]} color = {props.colorArray[0]} />
-          <Options text= {props.selectedArray[1]} hidden= {props.state[1]} color = {props.colorArray[1]}/>
-        </View>
-
-        <View style={styles.vertColRightside}>
-          <Options text= {props.selectedArray[2]} hidden= {props.state[2]} color = {props.colorArray[2]}/>
-          <Options text= {props.selectedArray[3]} hidden= {props.state[3]} color = {props.colorArray[3]} />
-        </View>
+function RenderRight(props) {
+  return (
+    <View style={{ flex: 2, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+      <View style={styles.vertColRightside}>
+        <Options text={props.selectedArray[0]} hidden={props.state[0]} color={props.colorArray[0]} />
+        <Options text={props.selectedArray[1]} hidden={props.state[1]} color={props.colorArray[1]} />
       </View>
-    )
+
+      <View style={styles.vertColRightside}>
+        <Options text={props.selectedArray[2]} hidden={props.state[2]} color={props.colorArray[2]} />
+        <Options text={props.selectedArray[3]} hidden={props.state[3]} color={props.colorArray[3]} />
+      </View>
+    </View>
+  )
 
 }
 
 class Rightside extends React.Component {
   render() {
     if (this.props.item == "East Asian") {
-      
-      for (var i = 0; i < n; i++){
-        if(array[i] == 'Taiwanese'){ // in array, add color
+      for (var i = 0; i < n; i++) {
+        if (outputArray[i] == 'Taiwanese') { // in array, add color
           EastAsiaColorTrack[0] = 'black';
         }
-        if(array[i] == 'Chinese'){ // in array, add color
+        if (outputArray[i] == 'Chinese') { // in array, add color
           EastAsiaColorTrack[1] = 'black';
         }
-        if(array[i] == 'Japanese'){ // in array, add color
+        if (outputArray[i] == 'Japanese') { // in array, add color
           EastAsiaColorTrack[2] = 'black';
         }
-        if(array[i] == 'Korean'){ // in array, add color
+        if (outputArray[i] == 'Korean') { // in array, add color
           EastAsiaColorTrack[3] = 'black';
         }
       }
       return (
-        
-          <RenderRight selectedArray = {EastOptions}  colorArray = {EastAsiaColorTrack} state= {[false, false, false, false]} />
-        
+
+        <RenderRight selectedArray={EastOptions} colorArray={EastAsiaColorTrack} state={[false, false, false, false]} />
+
       );
     }
     else if (this.props.item == "European") {
       return (
-        <RenderRight selectedArray = {EuroOptions}  colorArray = {EuropeanColorTrack} state= {[false, false, false, false]} />
+        <RenderRight selectedArray={EuroOptions} colorArray={EuropeanColorTrack} state={[false, false, false, false]} />
       );
     }
     else if (this.props.item == "South East Asian") {
       return (
-        <RenderRight selectedArray = {SEAOptions}  colorArray = {SEAColorTrack} state= {[false, false, false, true]} />        
+        <RenderRight selectedArray={SEAOptions} colorArray={SEAColorTrack} state={[false, false, false, true]} />
       );
     }
     else if (this.props.item == "Other") {
       return (
-        <RenderRight selectedArray = {OtherOptions}  colorArray = {OtherColorTrack} state= {[false, false, false, false]} />        
+        <RenderRight selectedArray={OtherOptions} colorArray={OtherColorTrack} state={[false, false, false, false]} />
       );
     }
   }
