@@ -239,7 +239,8 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem: 'East Asian'
+      currentItem: 'East Asian',
+      currentArray: outputArray
     }
   }
   static navigationOptions = {
@@ -257,7 +258,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={StyleSheet.flatten([styles.container3of5, styles.whiteBg])}>
-          <Text> {outputArray.join(', ')} </Text>
+          <Text> {this.state.currentArray.join(', ')} </Text>
           <Button
             title="Randomize"
             onPress={() => this.props.navigation.navigate('Details')}
