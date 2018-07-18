@@ -26,7 +26,7 @@ class Tabs extends React.Component {
       tab1: 'skyblue',
       tab2: 'lightgrey',
       tab3: 'lightgrey',
-      tab4: 'lightgrey'],
+      tab4: 'lightgrey',
     }
     this.onPress = this.onPress.bind(this);
   }
