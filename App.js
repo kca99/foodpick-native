@@ -1,6 +1,28 @@
 import React from 'react';
 import { TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+// import { createStore } from 'redux';
+
+// function addCuisine(text){
+//   return{ type: ADD_CUISINE, text }
+// }
+
+// function removeCuisine(text){
+//   return{ type: REMOVE_CUISINE, text }
+// }
+
+// const cuisineChoice = (state = 'empty', action) => {
+//   switch(action.type) { 
+//     case 'ADD_CUISINE':
+//       return state + 'text';
+//     case 'REMOVE_CUISINE':
+//       return state - 'text';
+//     default:
+//       return state;
+//   }
+// }
+
+// const store = createStore(cuisineChoice);
 
 var type = "poop"
 var category = ['East Asian', 'European', 'South East Asian', 'Other'];
