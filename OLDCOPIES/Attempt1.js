@@ -1,4 +1,4 @@
-import React from 'react';
+import React from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
 import { StyleSheet, TouchableHighlight, Text, View, Button } from 'react-native';
 import Swiper from 'react-native-swiper';
 

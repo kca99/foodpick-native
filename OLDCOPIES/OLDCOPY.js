@@ -1,7 +1,7 @@
-import React from 'react';
+import React from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
 import { TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import styles from './style';
+import { createStackNavigator } from '../../../../Library/Caches/typescript/2.9/node_modules/@types/react-navigation';
+import styles from '../style';
 import { createStore } from 'redux';
 
 function addCuisine(text){
