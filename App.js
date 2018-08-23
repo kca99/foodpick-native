@@ -13,6 +13,7 @@ import DetailsScreen from './components/DetailsView.js';
 //   ['Korean', 'Mediterranean', ' ', 'Middle Eastern']
 // ];
 
+
 const renderArray = [
   ['East Asian', 'European', 'South East Asian', 'Other'],
   ['Taiwanese', 'Chinese', 'Japanese', 'Korean'],
