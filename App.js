@@ -60,7 +60,7 @@ const store = createStore(baseReducer);
 class Categories extends React.Component {
   render() {
     const listItems = renderArray[0].map((Item) =>
-      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} >
+      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={() => console.log({Item}) }>
         <Text >
           {Item}
         </Text>
@@ -73,6 +73,7 @@ class Categories extends React.Component {
     )
   }
 }
+
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -101,7 +102,7 @@ class HomeScreen extends React.Component {
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <Categories />
         </View>
-
+         
       </View>
     );
   }
