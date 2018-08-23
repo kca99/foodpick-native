@@ -58,7 +58,7 @@ const selectedReducer = (state = outputArray, action) => {
     case 'REMOVE_CUISINE':
       return state - 'text';
     default:
-      return state;
+      return outputArray;
   }
 }
 
