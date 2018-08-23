@@ -67,7 +67,6 @@ const store = createStore(baseReducer);
 
 class Categories extends React.Component {
   render() {
-   
     const listItems = renderArray[0].map((Item) =>
       <TouchableHighlight key={Item.toString()} style={{ flex: 2}} >
         <Text >
