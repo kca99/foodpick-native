@@ -88,6 +88,7 @@ baseReducer = combineReducers({ visibilityReducer, selectedReducer });
 const store = createStore(baseReducer);
 
 // store.subscribe(Categories.render);
+console.log(store.getState());
 
 class Categories extends React.Component {
 
