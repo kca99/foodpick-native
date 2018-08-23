@@ -98,8 +98,6 @@ class HomeScreen extends React.Component {
       <View style={{ flex: 1 }}>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'lightblue' }}>
           <Text> Results: </Text>
-
-          />
         </View>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text> Hello </Text>
@@ -109,9 +107,7 @@ class HomeScreen extends React.Component {
           />
         </View>
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
-
           <Categories />
-
         </View>
 
       </View>
