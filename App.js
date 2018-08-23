@@ -13,7 +13,6 @@ import DetailsScreen from './components/DetailsView.js';
 //   ['Korean', 'Mediterranean', ' ', 'Middle Eastern']
 // ];
 
-
 const renderArray = [
   ['East Asian', 'European', 'South East Asian', 'Other'],
   ['Taiwanese', 'Chinese', 'Japanese', 'Korean'],
@@ -24,6 +23,13 @@ const renderArray = [
 
 const outputArray = [];
 
+function filterArray(array, text){
+  for(var i = 0; i < array.length; i++){
+    if(array[i] === text) return array.indexOf(i);
+    else return null;
+  }
+}
+
 const addCuisine = (text) => {
   return { type: ADD_CUISINE, text }
 }
@@ -32,20 +38,35 @@ const removeCuisine = (text) => {
   return { type: REMOVE_CUISINE, text }
 }
 
+const changeType = (value) => {
+  return { type: 'CHANGE_TYPE', value}
+}
+
 const addSelectedCuisine = (outputArray, text) => {
-  //concat 
+  //concat, ES6 way of writing outputArray.concat([text]) 
   return [...outputArray, text];
 };
 
-// const removeSelectedCuisine = (outputArray, text) =>{
-
-// };
+const removeSelectedCuisine = (outputArray, text) =>{
+  if(outputArray === null) return outputArray;
+  
+  var index = filterArray(outputArray, text);
+  
+  if(index === null) {
+    return outputArray;
+  }
+  else{
+    return[
+      ...outputArray.slice(0, index),
+      ...outputArray.slice(index + 1)
+    ]; 
+  } 
+};
 
 const visibilityReducer = (state = 0, action) => {
   switch (action.type) {
     case 'CHANGE_TYPE':
-      // not sure what to return, needs work
-      return state;
+      return state = action.value;
     default:
       return state;
   }
@@ -57,7 +78,7 @@ const selectedReducer = (state = outputArray, action) => {
     case 'ADD_CUISINE':
       return addSelectedCuisine(outputArray, action.text);
     case 'REMOVE_CUISINE':
-      return state - 'text';
+      return removeSelectedCuisine(outputArray, action.text);
     default:
       return outputArray;
   }
@@ -66,10 +87,17 @@ const selectedReducer = (state = outputArray, action) => {
 baseReducer = combineReducers({ visibilityReducer, selectedReducer });
 const store = createStore(baseReducer);
 
+// store.subscribe(Categories.render);
+
 class Categories extends React.Component {
+
+  onPress = () =>{
+    console.log("this is pressed");
+  }
+
   render() {
     const listItems = renderArray[0].map((Item) =>
-      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} >
+      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={this.onPress}>
         <Text >
           {Item}
         </Text>
@@ -99,8 +127,7 @@ class HomeScreen extends React.Component {
       <View style={{ flex: 1 }}>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'lightblue' }}>
           <Text> Results: </Text>
-
-          
+    
         </View>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text> Hello </Text>
