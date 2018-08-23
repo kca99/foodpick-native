@@ -5,14 +5,6 @@ import { createStore } from 'redux';
 import { combineReducers } from 'redux';
 import DetailsScreen from './components/DetailsView.js';
 
-// const renderArray = [
-//   [0, 1, 2, 3],
-//   ['Taiwanese', 'British', 'Vietnamese', 'Fast Food'],
-//   ['Chinese', 'Greek', 'Filipino', 'Mexican'],
-//   ['Japanese', 'French', 'Thai', 'Indian'],
-//   ['Korean', 'Mediterranean', ' ', 'Middle Eastern']
-// ];
-
 const renderArray = [
   ['East Asian', 'European', 'South East Asian', 'Other'],
   ['Taiwanese', 'Chinese', 'Japanese', 'Korean'],
