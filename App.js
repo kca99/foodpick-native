@@ -15,6 +15,13 @@ const renderArray = [
 
 const outputArray = [];
 
+function filterArray(array, text){
+  for(var i = 0; i < array.length; i++){
+    if(array[i] === text) return array.indexOf(i);
+    else return null;
+  }
+}
+
 const addCuisine = (text) => {
   return { type: ADD_CUISINE, text }
 }
@@ -28,15 +35,26 @@ const addSelectedCuisine = (outputArray, text) => {
   return [...outputArray, text];
 };
 
-// const removeSelectedCuisine = (outputArray, text) =>{
-
-// };
+const removeSelectedCuisine = (outputArray, text) =>{
+  if(outputArray === null) return outputArray;
+  
+  var index = filterArray(outputArray, text);
+  
+  if(index === null) {
+    return outputArray;
+  }
+  else{
+    return[
+      ...outputArray.slice(0, index),
+      ...outputArray.slice(index + 1)
+    ]; 
+  } 
+};
 
 const visibilityReducer = (state = 0, action) => {
   switch (action.type) {
     case 'CHANGE_TYPE':
-      // not sure what to return, needs work
-      return state;
+      return state = action.value;
     default:
       return state;
   }
@@ -48,7 +66,7 @@ const selectedReducer = (state = outputArray, action) => {
     case 'ADD_CUISINE':
       return addSelectedCuisine(outputArray, action.text);
     case 'REMOVE_CUISINE':
-      return state - 'text';
+      return removeSelectedCuisine(outputArray, action.text);
     default:
       return outputArray;
   }
@@ -73,6 +91,8 @@ class Categories extends React.Component {
     )
   }
 }
+
+store.subscribe(Categories.render);
 
 
 class HomeScreen extends React.Component {
