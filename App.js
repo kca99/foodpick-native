@@ -16,10 +16,14 @@ const renderArray = [
 const outputArray = [];
 
 function filterArray(array, text) {
-  for (var i = 0; i < array.length; i++) {
-    if (array[i] === text) return array.indexOf(i);
-    else return null;
-  }
+  // for (var i = 0; i < array.length; i++) {
+  //   if (array[i] === text) return array.indexOf(text);
+  //   else return null;
+  // }
+
+  //^quicker way of writing above lol
+  if(array.includes(text)) return array.indexOf(text);
+  else return;
 }
 
 function contains(array, text){
@@ -29,7 +33,7 @@ function contains(array, text){
   //   if(array[i] === text) return true;
   //   else return false;
   // }
-  
+
   //Object.values returns an array of all property values in an object
   if(Object.values(array).includes(text)) return true;
   else return false;
@@ -50,9 +54,9 @@ const addSelectedCuisine = (outputArray, text) => {
 
 const removeSelectedCuisine = (currStateArray, text) => {
   if (currStateArray === null) return currStateArray;
-
+  // console.log(text);
   var index = filterArray(currStateArray, text);
-
+  // console.log(index);
   if (index === null) {
     return currStateArray;
   }
@@ -77,7 +81,6 @@ const visibilityReducer = (state = 'East Asian', action) => {
   }
 }
 
-//need to work on returns for each case, not sure if this is how we should call it
 const selectedReducer = (state = outputArray, action) => {
   switch (action.type) {
     case 'ADD_CUISINE':
@@ -85,7 +88,7 @@ const selectedReducer = (state = outputArray, action) => {
     case 'REMOVE_CUISINE':
       return removeSelectedCuisine(state, action.text);
     default:
-      return outputArray;
+      return state;
   }
 }
 
@@ -161,15 +164,15 @@ class Options extends React.Component {
     // console.log(Option);
     // store.dispatch(addCuisine(Option));
     if(!contains(store.getState().selectedReducer, Option)){
-      console.log(Option + " is not in the array, adding");
+      console.log("ADDING: " + Option + " is not in the array");
       store.dispatch(addCuisine(Option));
     }
     else{
-      console.log(Option + " is in the array, removing");
+      console.log("REMOVING: " + Option + " is in the array");
       store.dispatch(removeCuisine(Option));
     }
     console.log(store.getState());
-    console.log(store.getState().selectedReducer);
+    // console.log(store.getState().selectedReducer);
   }
 
   render(){
