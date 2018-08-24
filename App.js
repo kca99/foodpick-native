@@ -92,21 +92,14 @@ class Categories extends React.Component {
 
   onPress(Item) {
     // console.log(Item);
-<<<<<<< HEAD
-
-    this.setState({
-      buttonColor: 'blue'
-=======
     this.setState ({
       buttonColor:'blue'
->>>>>>> ee832ca8f56f9748318e60972445ccb36eacdf1b
     })
     store.dispatch(changeType(Item));
     console.log(store.getState());
   }
 
   render() {
-<<<<<<< HEAD
 
     listItems = renderArray[0].map((Item) => {
       if (Item === store.getState()) {
@@ -135,18 +128,6 @@ class Categories extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'column', backgroundColor: this.props.buttonColor }}>
         {listItems}
-=======
-    listItems = renderArray[0].map((Item) =>
-      <TouchableHighlight key={Item.toString()} style={{ flex: 2, backgroundColor: this.props.buttonColor}} onPress={() => this.onPress(Item)}>
-        <Text >
-          {Item}
-        </Text>
-      </TouchableHighlight>
-    );
-    return (
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-      {listItems}
->>>>>>> ee832ca8f56f9748318e60972445ccb36eacdf1b
       </View>
     )
   }
