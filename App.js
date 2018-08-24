@@ -51,12 +51,16 @@ const removeSelectedCuisine = (outputArray, text) =>{
   } 
 };
 
-const visibilityReducer = (state = 0, action) => {
+const changeType = (text) => {
+  return { type: 'CHANGE_TYPE', text}
+}
+
+const visibilityReducer = (state = 'East Asian', action) => {
   switch (action.type) {
     case 'CHANGE_TYPE':
-      return state = action.value;
+      return state = action.text;
     default:
-      return state;
+      return state = 'East Asian';
   }
 }
 
@@ -75,10 +79,18 @@ const selectedReducer = (state = outputArray, action) => {
 baseReducer = combineReducers({ visibilityReducer, selectedReducer });
 const store = createStore(baseReducer);
 
+let listItems, Item;
+
 class Categories extends React.Component {
+  
+  onPress =()=>{
+    console.log(store.getState());
+    store.dispatch(changeType(Item));
+  }
+
   render() {
-    const listItems = renderArray[0].map((Item) =>
-      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={() => console.log({Item}) }>
+    listItems = renderArray[0].map((Item) =>
+      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={this.onPress} >
         <Text >
           {Item}
         </Text>
@@ -92,7 +104,7 @@ class Categories extends React.Component {
   }
 }
 
-store.subscribe(Categories.render);
+store.subscribe(Categories);
 
 
 class HomeScreen extends React.Component {
