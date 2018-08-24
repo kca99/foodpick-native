@@ -96,14 +96,16 @@ class Categories extends React.Component {
       buttonColor:'blue'
     })
     store.dispatch(changeType(Item));
-    console.log(store.getState());
+    //console.log(store.getState());
   }
 
   render() {
 
     listItems = renderArray[0].map((Item) => {
-      if (Item === store.getState()) {
-        console.log(store.getState().visibilityReducer);
+      var what = store.getState();
+      console.log(what.visibilityReducer)
+      if (Item === what.visibilityReducer) {
+        //console.log(what.keys());
         console.log('in first loop');
         return(
         <TouchableHighlight key={Item.toString()} style={{ flex: 2, backgroundColor: 'red'}} onPress={() => this.onPress(Item)} >
@@ -113,6 +115,8 @@ class Categories extends React.Component {
         </TouchableHighlight>)
       }
       else{
+        console.log(what.visibilityReducer)
+
         console.log('in second loop');
 
         return(
