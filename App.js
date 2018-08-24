@@ -87,8 +87,9 @@ class Categories extends React.Component {
     this.onPress = this.onPress.bind(this);
   }
   onPress(Item){
-    console.log(Item);
+    // console.log(Item);
     store.dispatch(changeType(Item));
+    console.log(store.getState());
   }
 
   render() {
