@@ -85,9 +85,17 @@ class Categories extends React.Component {
   constructor(props) {
     super(props);
     this.onPress = this.onPress.bind(this);
+    this.state = {
+      buttonColor = 'red'
+    }
   }
+
   onPress(Item){
     // console.log(Item);
+
+    this.setState ({
+      buttonColor ='blue'
+    })
     store.dispatch(changeType(Item));
     console.log(store.getState());
   }
@@ -101,7 +109,7 @@ class Categories extends React.Component {
       </TouchableHighlight>
     );
     return (
-      <View style={{ flex: 1, flexDirection: 'column' }}>
+      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: this.props.buttonColor }}>
       {listItems}
       </View>
     )
