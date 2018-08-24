@@ -86,7 +86,7 @@ class Categories extends React.Component {
     super(props);
     this.onPress = this.onPress.bind(this);
     this.state = {
-      buttonColor = 'red'
+      buttonColor: 'red'
     }
   }
 
@@ -94,7 +94,7 @@ class Categories extends React.Component {
     // console.log(Item);
 
     this.setState ({
-      buttonColor ='blue'
+      buttonColor:'blue'
     })
     store.dispatch(changeType(Item));
     console.log(store.getState());
