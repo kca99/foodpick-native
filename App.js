@@ -102,14 +102,14 @@ class Categories extends React.Component {
 
   render() {
     listItems = renderArray[0].map((Item) =>
-      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={() => this.onPress(Item)} >
+      <TouchableHighlight key={Item.toString()} style={{ flex: 2, backgroundColor: this.props.buttonColor}} onPress={() => this.onPress(Item)}>
         <Text >
           {Item}
         </Text>
       </TouchableHighlight>
     );
     return (
-      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: this.props.buttonColor }}>
+      <View style={{ flex: 1, flexDirection: 'column' }}>
       {listItems}
       </View>
     )
