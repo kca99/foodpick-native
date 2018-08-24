@@ -22,12 +22,25 @@ function filterArray(array, text) {
   }
 }
 
+function contains(array, text){
+  //the following doesn't work b/c current state of selectedReducer returns
+  //an obj, not an array. so array.length can't be called
+  // for (var i = 0; i < array.length; i++){
+  //   if(array[i] === text) return true;
+  //   else return false;
+  // }
+  
+  //Object.values returns an array of all property values in an object
+  if(Object.values(array).includes(text)) return true;
+  else return false;
+}
+
 const addCuisine = (text) => {
-  return { type: ADD_CUISINE, text }
+  return { type: 'ADD_CUISINE', text }
 }
 
 const removeCuisine = (text) => {
-  return { type: REMOVE_CUISINE, text }
+  return { type: 'REMOVE_CUISINE', text }
 }
 
 const addSelectedCuisine = (outputArray, text) => {
@@ -35,18 +48,18 @@ const addSelectedCuisine = (outputArray, text) => {
   return [...outputArray, text];
 };
 
-const removeSelectedCuisine = (outputArray, text) => {
-  if (outputArray === null) return outputArray;
+const removeSelectedCuisine = (currStateArray, text) => {
+  if (currStateArray === null) return currStateArray;
 
-  var index = filterArray(outputArray, text);
+  var index = filterArray(currStateArray, text);
 
   if (index === null) {
-    return outputArray;
+    return currStateArray;
   }
   else {
     return [
-      ...outputArray.slice(0, index),
-      ...outputArray.slice(index + 1)
+      ...currStateArray.slice(0, index),
+      ...currStateArray.slice(index + 1)
     ];
   }
 };
@@ -68,9 +81,9 @@ const visibilityReducer = (state = 'East Asian', action) => {
 const selectedReducer = (state = outputArray, action) => {
   switch (action.type) {
     case 'ADD_CUISINE':
-      return addSelectedCuisine(outputArray, action.text);
+      return addSelectedCuisine(state, action.text);
     case 'REMOVE_CUISINE':
-      return removeSelectedCuisine(outputArray, action.text);
+      return removeSelectedCuisine(state, action.text);
     default:
       return outputArray;
   }
@@ -79,7 +92,8 @@ const selectedReducer = (state = outputArray, action) => {
 baseReducer = combineReducers({ visibilityReducer, selectedReducer });
 const store = createStore(baseReducer);
 
-let listItems, Item;
+
+let listItems;
 
 class Categories extends React.Component {
   constructor(props) {
@@ -96,11 +110,10 @@ class Categories extends React.Component {
       buttonColor:'blue'
     })
     store.dispatch(changeType(Item));
-    //console.log(store.getState());
+    // console.log(store.getState());
   }
 
   render() {
-
     listItems = renderArray[0].map((Item) => {
       var currentState = store.getState();
       //console.log(currentState.visibilityReducer)
@@ -124,11 +137,9 @@ class Categories extends React.Component {
           </Text>
         </TouchableHighlight>)
       }
-    }
-
-    );
+    });
     return (
-      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: this.props.buttonColor }}>
+      <View style={{ flex: 1, flexDirection: 'column'}}>
         {listItems}
       </View>
     )
@@ -137,6 +148,72 @@ class Categories extends React.Component {
 
 store.subscribe(Categories);
 
+
+let listOptionsLeft, listOptionsRight;
+
+class Options extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onPress = this.onPress.bind(this);
+  }
+  
+  onPress(Option){
+    // console.log(Option);
+    // store.dispatch(addCuisine(Option));
+    if(!contains(store.getState().selectedReducer, Option)){
+      console.log(Option + " is not in the array, adding");
+      store.dispatch(addCuisine(Option));
+    }
+    else{
+      console.log(Option + " is in the array, removing");
+      store.dispatch(removeCuisine(Option));
+    }
+    console.log(store.getState());
+    console.log(store.getState().selectedReducer);
+  }
+
+  render(){
+
+    listOptionsLeft = renderArray[1].map((Option, i) => {
+      if(i%2 === 0){
+        // console.log(Option);
+        return(
+          <TouchableHighlight key={Option.toString()} style={{ flex: 2 }} onPress={ () => this.onPress(Option) }>
+            <Text>
+             {Option}
+            </Text>
+          </TouchableHighlight>
+        )
+      }
+    });
+  
+    listOptionsRight = renderArray[1].map((Option, i) =>{
+      if(!(i%2 === 0)){
+        // console.log(Option);
+        return(
+          <TouchableHighlight key={Option.toString()} style={{ flex: 2 }} onPress={ () => this.onPress(Option) }>
+            <Text>
+              {Option}
+            </Text>
+          </TouchableHighlight>
+        )
+      }
+    })
+    return(
+      <View style ={{ flex: 3, flexDirection: 'row' }} > 
+        <View style ={{ flex: 1, flexDirection: 'column' }}>
+          {listOptionsLeft}
+        </View>
+
+        <View style ={{ flex: 1, flexDirection: 'column' }}>
+          {listOptionsRight}
+        </View>
+      </View>
+    )
+  }
+}
+
+store.subscribe(Options);
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -164,8 +241,8 @@ class HomeScreen extends React.Component {
         </View>
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <Categories />
+          <Options />
         </View>
-
       </View>
     );
   }
