@@ -15,9 +15,9 @@ const renderArray = [
 
 const outputArray = [];
 
-function filterArray(array, text){
-  for(var i = 0; i < array.length; i++){
-    if(array[i] === text) return array.indexOf(i);
+function filterArray(array, text) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] === text) return array.indexOf(i);
     else return null;
   }
 }
@@ -35,24 +35,24 @@ const addSelectedCuisine = (outputArray, text) => {
   return [...outputArray, text];
 };
 
-const removeSelectedCuisine = (outputArray, text) =>{
-  if(outputArray === null) return outputArray;
-  
+const removeSelectedCuisine = (outputArray, text) => {
+  if (outputArray === null) return outputArray;
+
   var index = filterArray(outputArray, text);
-  
-  if(index === null) {
+
+  if (index === null) {
     return outputArray;
   }
-  else{
-    return[
+  else {
+    return [
       ...outputArray.slice(0, index),
       ...outputArray.slice(index + 1)
-    ]; 
-  } 
+    ];
+  }
 };
 
 const changeType = (text) => {
-  return { type: 'CHANGE_TYPE', text}
+  return { type: 'CHANGE_TYPE', text }
 }
 
 const visibilityReducer = (state = 'East Asian', action) => {
@@ -90,27 +90,45 @@ class Categories extends React.Component {
     }
   }
 
-  onPress(Item){
+  onPress(Item) {
     // console.log(Item);
 
-    this.setState ({
-      buttonColor:'blue'
+    this.setState({
+      buttonColor: 'blue'
     })
     store.dispatch(changeType(Item));
     console.log(store.getState());
   }
 
   render() {
-    listItems = renderArray[0].map((Item) =>
-      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={() => this.onPress(Item)} >
-        <Text >
-          {Item}
-        </Text>
-      </TouchableHighlight>
+
+    listItems = renderArray[0].map((Item) => {
+      if (Item === store.getState()) {
+        console.log(store.getState().visibilityReducer);
+        console.log('in first loop');
+        return(
+        <TouchableHighlight key={Item.toString()} style={{ flex: 2, backgroundColor: 'red'}} onPress={() => this.onPress(Item)} >
+          <Text >
+            {Item}
+          </Text>
+        </TouchableHighlight>)
+      }
+      else{
+        console.log('in second loop');
+
+        return(
+        <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={() => this.onPress(Item)} >
+          <Text >
+            {Item}
+          </Text>
+        </TouchableHighlight>)
+      }
+    }
+
     );
     return (
       <View style={{ flex: 1, flexDirection: 'column', backgroundColor: this.props.buttonColor }}>
-      {listItems}
+        {listItems}
       </View>
     )
   }
@@ -146,7 +164,7 @@ class HomeScreen extends React.Component {
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <Categories />
         </View>
-         
+
       </View>
     );
   }
