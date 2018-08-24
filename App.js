@@ -92,7 +92,6 @@ class Categories extends React.Component {
 
   onPress(Item){
     // console.log(Item);
-
     this.setState ({
       buttonColor:'blue'
     })
