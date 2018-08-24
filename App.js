@@ -114,6 +114,7 @@ class Categories extends React.Component {
     })
     store.dispatch(changeType(Item));
     // console.log(store.getState());
+    console.log("Switching to " + Item);
   }
 
   render() {
@@ -152,7 +153,7 @@ class Categories extends React.Component {
 store.subscribe(Categories);
 
 
-let listOptionsLeft, listOptionsRight;
+let listOptionsLeft, listOptionsRight, tab;
 
 class Options extends React.Component {
   constructor(props) {
@@ -176,8 +177,24 @@ class Options extends React.Component {
   }
 
   render(){
-
-    listOptionsLeft = renderArray[1].map((Option, i) => {
+    
+    switch(store.getState().visibilityReducer){
+      case 'East Asian':
+        tab = 1;
+        break;
+      case 'European':
+        tab = 2;
+        break;
+      case 'South East Asian':
+        tab = 3;
+        break;
+      case 'Other':
+        tab = 4;
+        break;
+    }
+    // if(store.getState().visibilityReducer === 'East Asian') console.log("true");
+    // else console.log("false");
+    listOptionsLeft = renderArray[tab].map((Option, i) => {
       if(i%2 === 0){
         // console.log(Option);
         return(
@@ -190,7 +207,7 @@ class Options extends React.Component {
       }
     });
   
-    listOptionsRight = renderArray[1].map((Option, i) =>{
+    listOptionsRight = renderArray[tab].map((Option, i) =>{
       if(!(i%2 === 0)){
         // console.log(Option);
         return(
