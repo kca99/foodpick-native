@@ -1,8 +1,7 @@
 import React from 'react';
 import { TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { createStore } from 'redux';
-import { combineReducers } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import DetailsScreen from './components/DetailsView.js';
 
 const renderArray = [
@@ -62,8 +61,8 @@ const removeSelectedCuisine = (currStateArray, text) => {
   }
   else {
     return [
-      ...currStateArray.slice(0, index),
-      ...currStateArray.slice(index + 1)
+      ...currStateArray.slice(0, index), //first portion from 0 - index we want to remove
+      ...currStateArray.slice(index + 1) //concat rest back on
     ];
   }
 };
@@ -75,9 +74,9 @@ const changeType = (text) => {
 const visibilityReducer = (state = 'East Asian', action) => {
   switch (action.type) {
     case 'CHANGE_TYPE':
-      return state = action.text;
+      return action.text;
     default:
-      return state = 'East Asian';
+      return state;
   }
 }
 
@@ -113,8 +112,8 @@ class Categories extends React.Component {
       buttonColor:'blue'
     })
     store.dispatch(changeType(Item));
-    // console.log(store.getState());
     console.log("Switching to " + Item);
+    console.log(store.getState());
   }
 
   render() {
