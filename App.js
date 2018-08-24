@@ -82,15 +82,18 @@ const store = createStore(baseReducer);
 let listItems, Item;
 
 class Categories extends React.Component {
-  
-  onPress =()=>{
-    console.log(store.getState());
+  constructor(props) {
+    super(props);
+    this.onPress = this.onPress.bind(this);
+  }
+  onPress(Item){
+    console.log(Item);
     store.dispatch(changeType(Item));
   }
 
   render() {
     listItems = renderArray[0].map((Item) =>
-      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={this.onPress} >
+      <TouchableHighlight key={Item.toString()} style={{ flex: 2}} onPress={() => this.onPress(Item)} >
         <Text >
           {Item}
         </Text>
