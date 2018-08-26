@@ -11,7 +11,7 @@ const renderArray = [
   ['Vietnamese', 'Filipino', 'Thai', ''],
   ['Fast Food', 'Mexican', 'Indian', 'Middle Eastern']
 ];
-
+var tab =1; 
 const outputArray = [];
 
 function filterArray(array, text) {
@@ -114,6 +114,28 @@ class Categories extends React.Component {
     store.dispatch(changeType(Item));
     console.log("Switching to " + Item);
     console.log(store.getState());
+    switch(store.getState().visibilityReducer){
+      case 'East Asian':
+        tab = 1;
+        console.log("tab= ", tab);
+
+        break;
+      case 'European':
+        tab = 2;
+        console.log("tab= ", tab);
+
+        break;
+      case 'South East Asian':
+        tab = 3;
+        console.log("tab= ", tab);
+
+        break;
+      case 'Other':
+        tab = 4;
+        console.log("tab= ", tab);
+
+        break;
+    }
   }
 
   render() {
@@ -152,7 +174,7 @@ class Categories extends React.Component {
 store.subscribe(Categories);
 
 
-let listOptionsLeft, listOptionsRight, tab;
+let listOptionsLeft, listOptionsRight;
 
 class Options extends React.Component {
   constructor(props) {
@@ -176,26 +198,15 @@ class Options extends React.Component {
   }
 
   render(){
+    console.log("inside options loop: ", tab)
+
     
-    switch(store.getState().visibilityReducer){
-      case 'East Asian':
-        tab = 1;
-        break;
-      case 'European':
-        tab = 2;
-        break;
-      case 'South East Asian':
-        tab = 3;
-        break;
-      case 'Other':
-        tab = 4;
-        break;
-    }
     // if(store.getState().visibilityReducer === 'East Asian') console.log("true");
     // else console.log("false");
     listOptionsLeft = renderArray[tab].map((Option, i) => {
+      
       if(i%2 === 0){
-        // console.log(Option);
+         //console.log(Option);
         return(
           <TouchableHighlight key={Option.toString()} style={{ flex: 2 }} onPress={ () => this.onPress(Option) }>
             <Text>
@@ -238,9 +249,21 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem: 0
+      currentItem: 0,
+      items: []
     }
+
+    store.subscribe(
+      () =>{
+      this.setState({
+        items:store.getState().selectedReducer,
+      });
+      console.log(this.state.items)
+    });
   }
+
+  
+
   static navigationOptions = {
     title: 'FoodPick'
   };
@@ -249,7 +272,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'lightblue' }}>
-          <Text> Results: </Text>
+          <Text> Results: {this.state.items} </Text>
         </View>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text> Hello </Text>
