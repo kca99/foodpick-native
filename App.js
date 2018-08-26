@@ -256,7 +256,7 @@ class HomeScreen extends React.Component {
     store.subscribe(
       () =>{
       this.setState({
-        items:store.getState().selectedReducer,
+        items:store.getState().selectedReducer.join(', '),
       });
       console.log(this.state.items)
     });
@@ -272,7 +272,8 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'lightblue' }}>
-          <Text> Results: {this.state.items} </Text>
+          <Text> Results:  </Text>
+          <Text> {this.state.items} </Text>
         </View>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text> Hello </Text>
