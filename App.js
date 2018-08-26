@@ -8,7 +8,7 @@ const renderArray = [
   ['East Asian', 'European', 'South East Asian', 'Other'],
   ['Taiwanese', 'Chinese', 'Japanese', 'Korean'],
   ['British', 'Greek', 'French', 'Mediterranean'],
-  ['Vietnamese', 'Filipino', 'Thai', ''],
+  ['Vietnamese', 'Filipino', 'Thai',''],
   ['Fast Food', 'Mexican', 'Indian', 'Middle Eastern']
 ];
 var tab =1; 
@@ -204,11 +204,17 @@ class Options extends React.Component {
     // if(store.getState().visibilityReducer === 'East Asian') console.log("true");
     // else console.log("false");
     listOptionsLeft = renderArray[tab].map((Option, i) => {
-      
+      let color;
+      if( contains(store.getState().selectedReducer, Option)){
+        color = 'red';
+      }
+      else{
+        color ='grey'
+      }
       if(i%2 === 0){
          //console.log(Option);
         return(
-          <TouchableHighlight key={Option.toString()} style={{ flex: 2 }} onPress={ () => this.onPress(Option) }>
+          <TouchableHighlight key={Option.toString()} style={{ flex: 2, backgroundColor: color}} onPress={ () => this.onPress(Option) }>
             <Text>
              {Option}
             </Text>
@@ -218,10 +224,17 @@ class Options extends React.Component {
     });
   
     listOptionsRight = renderArray[tab].map((Option, i) =>{
+      let color;
+      if( contains(store.getState().selectedReducer, Option)){
+        color = 'red';
+      }
+      else{
+        color ='grey'
+      }
       if(!(i%2 === 0)){
         // console.log(Option);
         return(
-          <TouchableHighlight key={Option.toString()} style={{ flex: 2 }} onPress={ () => this.onPress(Option) }>
+          <TouchableHighlight key={Option.toString()} style={{ flex: 2,backgroundColor: color }} onPress={ () => this.onPress(Option) }>
             <Text>
               {Option}
             </Text>
