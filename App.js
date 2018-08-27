@@ -211,7 +211,7 @@ class Options extends React.Component {
       else{
         color ='grey'
       }
-      if(i%2 === 0){
+      if(i%2 === 0 && !(Option === '')){
          //console.log(Option);
         return(
           <TouchableHighlight key={Option.toString()} style={{ flex: 2, backgroundColor: color}} onPress={ () => this.onPress(Option) }>
@@ -231,7 +231,7 @@ class Options extends React.Component {
       else{
         color ='grey'
       }
-      if(!(i%2 === 0)){
+      if(!(i%2 === 0) && !(Option === '')){
         // console.log(Option);
         return(
           <TouchableHighlight key={Option.toString()} style={{ flex: 2,backgroundColor: color }} onPress={ () => this.onPress(Option) }>
