@@ -112,8 +112,8 @@ class Categories extends React.Component {
       buttonColor:'blue'
     })
     store.dispatch(changeType(Item));
-    console.log("Switching to " + Item);
-    console.log(store.getState());
+    //console.log("Switching to " + Item);
+    //console.log(store.getState());
     switch(store.getState().visibilityReducer){
       case 'East Asian':
         tab = 1;
@@ -186,11 +186,11 @@ class Options extends React.Component {
     // console.log(Option);
     // store.dispatch(addCuisine(Option));
     if(!contains(store.getState().selectedReducer, Option)){
-      console.log("ADDING: " + Option + " is not in the array");
+      //console.log("ADDING: " + Option + " is not in the array");
       store.dispatch(addCuisine(Option));
     }
     else{
-      console.log("REMOVING: " + Option + " is in the array");
+      //console.log("REMOVING: " + Option + " is in the array");
       store.dispatch(removeCuisine(Option));
     }
     console.log(store.getState());
@@ -198,7 +198,7 @@ class Options extends React.Component {
   }
 
   render(){
-    console.log("inside options loop: ", tab)
+    //console.log("inside options loop: ", tab)
 
     
     // if(store.getState().visibilityReducer === 'East Asian') console.log("true");
@@ -255,7 +255,6 @@ class Options extends React.Component {
     )
   }
 }
-
 store.subscribe(Options);
 
 class HomeScreen extends React.Component {
@@ -263,15 +262,17 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
       currentItem: 0,
-      items: []
+      items: [],
+      itemNonJoin:[]
     }
 
     store.subscribe(
       () =>{
       this.setState({
         items:store.getState().selectedReducer.join(', '),
+        itemNonJoin: store.getState().selectedReducer,
       });
-      console.log(this.state.items)
+      //console.log(this.state.items)
     });
   }
 
@@ -282,18 +283,22 @@ class HomeScreen extends React.Component {
   };
 
   render() {
+    let randItem;
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'lightblue' }}>
-          <Text> Results:  </Text>
+        <View style={{ flex: 2, alignItems: 'center',  backgroundColor: 'lightblue' }}>
+          <Text> Your Current Choices:  </Text>
           <Text> {this.state.items} </Text>
         </View>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Text> Hello </Text>
+          <Text> Press Here to Randomize your Choices: </Text>
           <Button
-            title="Map TODO"
-            onPress={() => this.props.navigation.navigate('Details')}
-          />
+            title="Let's Go"
+            onPress={() => 
+              {
+              // console.log(store.getState().selectedReducer);
+              this.props.navigation.navigate('Details',{items: this.state.itemNonJoin})}
+            }/>
         </View>
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <Categories />
