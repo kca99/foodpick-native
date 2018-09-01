@@ -1,6 +1,8 @@
 import React from 'react';
 import { Platform, TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native';
-import {Constants, Location, Permissions} from 'expo';
+import { Constants, Location, Permissions} from 'expo';
+import { MapView } from 'expo';
+
 
 class DetailsScreen extends React.Component {
   constructor(props) {
@@ -8,6 +10,8 @@ class DetailsScreen extends React.Component {
     this.state = {
       location: null,
       errorMessage: null,
+      longitude: [],
+      latitude: []
     }
   }
 
@@ -31,8 +35,17 @@ class DetailsScreen extends React.Component {
 
     let location = await Location.getCurrentPositionAsync({});
     this.setState({ location });
-  };
+    this.setState({ 
+      longitude: this.state.location['coords']['longitude'],
+      latitude: this.state.location['coords']['latitude']
+     });
+    console.log(this.state.location['timestamp'])
+    console.log(this.state.latitude)
+    console.log(this.state.longitude)
+    
 
+  };
+  
   render() {
     const { navigation } = this.props;
     const items = navigation.getParam('items');
@@ -40,6 +53,9 @@ class DetailsScreen extends React.Component {
     // console.log(items[0])
     const length=items.length;
     var index = Math.floor((Math.random() * length ) );
+    var latitude = this.state.latitude;
+    var longitude = this.state.longitude;
+    console.log(latitude , longitude);
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
@@ -56,6 +72,16 @@ class DetailsScreen extends React.Component {
               title="Redo location"
               onPress={() => this.getLocation()}
             />
+            
+           <MapView
+        style={{ flex: 1 }}
+        initialRegion={{
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
           </View>
         </View>
       </View>
