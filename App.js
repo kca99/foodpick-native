@@ -1,7 +1,8 @@
 import React from 'react';
-import { TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native';
+import { TouchableHighlight, Button, View, Text, StyleSheet, Dimensions } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { createStore, combineReducers } from 'redux';
+import Modal from "react-native-modal";
 import DetailsScreen from './components/DetailsView.js';
 
 const renderArray = [
@@ -263,7 +264,8 @@ class HomeScreen extends React.Component {
     this.state = {
       currentItem: 0,
       items: [],
-      itemNonJoin:[]
+      itemNonJoin:[],
+      isModalVisible: false
     }
 
     store.subscribe(
@@ -275,8 +277,19 @@ class HomeScreen extends React.Component {
       //console.log(this.state.items)
     });
   }
-
   
+  toggleModal(){
+    // console.log(Array.from(store.getState().selectedReducer).length);
+    if(Array.from(store.getState().selectedReducer).length === 0){
+      console.log('this shit empty');
+      this.setState({
+        isModalVisible: !this.state.isModalVisible
+      });
+    }else{
+      console.log('go to naviation screen');
+      this.props.navigation.navigate('Details',{items: this.state.itemNonJoin})
+    }
+  }
 
   static navigationOptions = {
     title: 'FoodPick'
@@ -294,11 +307,20 @@ class HomeScreen extends React.Component {
           <Text> Press Here to Randomize your Choices: </Text>
           <Button
             title="Let's Go"
-            onPress={() => 
-              {
-              // console.log(store.getState().selectedReducer);
-              this.props.navigation.navigate('Details',{items: this.state.itemNonJoin})}
+            onPress={() => this.toggleModal()
             }/>
+          <Modal isVisible={this.state.isModalVisible}>
+            <View style={{height: Dimensions.get('window').width/2, width: Dimensions.get('window').height/2, 
+            flexDirection: 'column', alignItems: 'center', backgroundColor: 'white'
+            }}>
+              <Text style={{flex: 1, alignItems: 'center'}}>You need to select some food options before randomizing!</Text>
+              <Button
+                title="Ok! Bring me Back"
+                onPress={() => this.toggleModal()}
+                style={{flex: 1}}
+              />
+            </View>
+          </Modal>
         </View>
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <Categories />
