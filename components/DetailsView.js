@@ -31,17 +31,24 @@ class DetailsScreen extends React.Component {
       this.setState({
         errorMessage: 'Permission to access location was denied',
       });
+      
     }
-
+    //this if statement below doesn't work properly, the below if condition is undefined zzz 
+    console.log(Expo.Location.getProviderStatusAsync())
+    if(Expo.Location.getProviderStatusAsync().locationServicesEnabled === false){
+      this.setState({
+        errorMessage: 'Please turn on location',
+      });
+    }
     let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
+    this.setState({ location: location });
     this.setState({ 
       longitude: this.state.location['coords']['longitude'],
       latitude: this.state.location['coords']['latitude']
      });
     console.log(this.state.location['timestamp'])
-    console.log(this.state.latitude)
-    console.log(this.state.longitude)
+    // console.log(this.state.latitude)
+    // console.log(this.state.longitude)
     
 
   };
