@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, TouchableHighlight, Button, View, Text, StyleSheet } from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
-import { MapView } from 'expo';
+import { MapView, Marker } from 'expo';
 
 
 class DetailsScreen extends React.Component {
@@ -106,7 +106,13 @@ class DetailsScreen extends React.Component {
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
+              >
+              <MapView.Marker 
+                coordinate={{latitude:this.state.latitude, longitude: this.state.longitude}}
+                title={"Current Location"}
+                description={"You are currently here!"}
               />
+              </MapView>
             </View>
           </View>
         </View>
