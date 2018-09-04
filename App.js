@@ -15,6 +15,26 @@ const renderArray = [
 var tab =1; 
 const outputArray = [];
 
+const testArray = [1, 2, 3];
+const testArray2 = [[4, 5, 6], [7, 8, 9], [10, 11, 12]];
+
+function concatTestArray(array, array2){
+  return [...array, array2];
+}
+
+function concatTest2(array, array2){
+  var newArray = array;
+  for(var i = 0; i < array2.length; i++){
+    array2[i].map((Item) => {
+      newArray = [...newArray, Item]
+    });
+  }
+  return newArray
+}
+
+console.log(concatTest2(testArray, testArray2));
+console.log(renderArray.length);
+
 function filterArray(array, text) {
   // for (var i = 0; i < array.length; i++) {
   //   if (array[i] === text) return array.indexOf(text);
@@ -47,9 +67,13 @@ const removeCuisine = (text) => {
   return { type: 'REMOVE_CUISINE', text }
 }
 
-const addSelectedCuisine = (outputArray, text) => {
+const addAll = () =>{
+  return { type: 'ADD_ALL_CUISINE' }
+}
+
+const addSelectedCuisine = (currStateArray, text) => {
   //concat 
-  return [...outputArray, text];
+  return [...currStateArray, text];
 };
 
 const removeSelectedCuisine = (currStateArray, text) => {
@@ -67,6 +91,30 @@ const removeSelectedCuisine = (currStateArray, text) => {
     ];
   }
 };
+
+const addAllCuisines = (currStateArray) => {
+  var updatedArray = currStateArray;
+  //i could just put this all into one code block and check every loop, but that'll be 
+  //less efficient since you'll be checkin if its in array everytime, so i split it up
+  //current runtime is O(n^2), should be ok since there aren't too many options rn
+  if(currStateArray === null){
+    for(var i = 1; i < renderArray.length; i++){
+      renderArray[i].map((Item) => {
+        updatedArray = [...updatedArray, Item]
+      });
+    }
+  }
+  else{ //currArray has something in it already
+    for(var i = 1; i < renderArray.length; i++){
+      renderArray[i].map((Item) => {
+        if(!updatedArray.includes(Item) && Item !== ''){
+          updatedArray = [...updatedArray, Item]  
+        } 
+      });
+    }
+  }//end of else
+  return updatedArray;
+}
 
 const changeType = (text) => {
   return { type: 'CHANGE_TYPE', text }
@@ -87,6 +135,8 @@ const selectedReducer = (state = outputArray, action) => {
       return addSelectedCuisine(state, action.text);
     case 'REMOVE_CUISINE':
       return removeSelectedCuisine(state, action.text);
+    case 'ADD_ALL_CUISINE':
+      return addAllCuisines(state);
     default:
       return state;
   }
@@ -304,7 +354,7 @@ class HomeScreen extends React.Component {
           <Text> {this.state.items} </Text>
         </View>
         <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Text> Press Here to Randomize your Choices: </Text>
+          <Text> Randomize your choices: </Text>
           <Button
             title="Let's Go"
             onPress={() => this.toggleModal()
@@ -321,6 +371,11 @@ class HomeScreen extends React.Component {
               />
             </View>
           </Modal>
+
+          <Button
+            title="Select All"
+            onPress={() => store.dispatch(addAll())}
+          />
         </View>
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <Categories />
