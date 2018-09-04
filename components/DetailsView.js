@@ -10,8 +10,8 @@ class DetailsScreen extends React.Component {
     this.state = {
       location: null,
       errorMessage: null,
-      longitude: [],
-      latitude: []
+      longitude: null,
+      latitude: null,
     }
   }
 
@@ -62,37 +62,50 @@ class DetailsScreen extends React.Component {
     var index = Math.floor((Math.random() * length ) );
     var latitude = this.state.latitude;
     var longitude = this.state.longitude;
+    
     console.log(latitude , longitude);
-    return (
-      <View style={{ flex: 1 }}>
+
+    if(latitude === null || longitude === null){
+      console.log("Rendering Waiting Page");
+      return (
+        <View>
+          <Text>Waiting</Text>
+        </View>
+      );
+    }
+    else{
+      return (
         <View style={{ flex: 1 }}>
-          <View style={{ flex: 13, backgroundColor: 'white' }}>
-            <Button
-              title="Change Your Options"
-              onPress={() => this.props.navigation.goBack()}
-            />
-            <Text> You have randomed: </Text>
-            <Text> {items[index]}</Text>
-            <Text> {this.state.errorMessage}</Text>
-            <Text> {JSON.stringify(this.state.location)}</Text>
-            <Button
-              title="Redo location"
-              onPress={() => this.getLocation()}
-            />
-            
-           <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 13, backgroundColor: 'white' }}>
+              <Button
+                title="Change Your Options"
+                onPress={() => this.props.navigation.goBack()}
+              />
+              <Text> You have randomed: </Text>
+              <Text> {items[index]}</Text>
+              <Text> {this.state.errorMessage}</Text>
+              <Text> {JSON.stringify(this.state.location)}</Text>
+              <Button
+                title="Redo location"
+                onPress={() => this.getLocation()}
+              />
+              
+             <MapView
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    }
+    
   }
 };
 

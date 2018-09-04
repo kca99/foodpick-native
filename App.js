@@ -32,8 +32,8 @@ function concatTest2(array, array2){
   return newArray
 }
 
-console.log(concatTest2(testArray, testArray2));
-console.log(renderArray.length);
+//console.log(concatTest2(testArray, testArray2));
+// console.log(renderArray.length);
 
 function filterArray(array, text) {
   // for (var i = 0; i < array.length; i++) {
