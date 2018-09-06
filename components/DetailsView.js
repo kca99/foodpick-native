@@ -44,7 +44,7 @@ class DetailsScreen extends React.Component {
           errorMessage: 'Please turn on location',
         });
       }
-      else{
+      else {
         let location = await Location.getCurrentPositionAsync({});
         this.setState({ location: location });
         this.setState({
@@ -54,6 +54,16 @@ class DetailsScreen extends React.Component {
         console.log(this.state.location['timestamp'])
         // console.log(this.state.latitude)
         // console.log(this.state.longitude)  
+        const res = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=250&type=restaurant&key=AIzaSyCElZ2xXdBkiMP6Enrs-Ki8u0aF1sgp8R8`
+        );
+        res = await res.json();
+         console.log(res)
+
+        // fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=500&type=restaurant&key=AIzaSyCElZ2xXdBkiMP6Enrs-Ki8u0aF1sgp8R8`)
+        //   .then(res => {
+        //     return res.json()
+        //   })
+        // console.log(res)
       }
     }
 
@@ -107,11 +117,11 @@ class DetailsScreen extends React.Component {
                   longitudeDelta: 0.0421,
                 }}
               >
-              <MapView.Marker 
-                coordinate={{latitude:this.state.latitude, longitude: this.state.longitude}}
-                title={"Current Location"}
-                description={"You are currently here!"}
-              />
+                <MapView.Marker
+                  coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude }}
+                  title={"Current Location"}
+                  description={"You are currently here!"}
+                />
               </MapView>
             </View>
           </View>
