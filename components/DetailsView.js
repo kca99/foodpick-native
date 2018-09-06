@@ -38,7 +38,7 @@ class DetailsScreen extends React.Component {
       //this if statement below doesn't work properly, the below if condition is undefined zzz 
       //Check if location is actually on
       var provObj = await Expo.Location.getProviderStatusAsync();
-      console.log("provObj: ", provObj['gpsAvailable'])
+      console.log("provObj: ", provObj)
       if (provObj['gpsAvailable'] === false) { //Location is off you nitwits!
         this.setState({
           errorMessage: 'Please turn on location',
@@ -54,16 +54,14 @@ class DetailsScreen extends React.Component {
         console.log(this.state.location['timestamp'])
         // console.log(this.state.latitude)
         // console.log(this.state.longitude)  
-        const res = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=250&type=restaurant&key=AIzaSyCElZ2xXdBkiMP6Enrs-Ki8u0aF1sgp8R8`
+
+        //this works
+        const res = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?location=${this.state.latitude},${this.state.longitude}&radius=500&query=Korean&type=restaurant&key=AIzaSyCElZ2xXdBkiMP6Enrs-Ki8u0aF1sgp8R8`
         );
         res = await res.json();
          console.log(res)
 
-        // fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=500&type=restaurant&key=AIzaSyCElZ2xXdBkiMP6Enrs-Ki8u0aF1sgp8R8`)
-        //   .then(res => {
-        //     return res.json()
-        //   })
-        // console.log(res)
+        
       }
     }
 
