@@ -315,7 +315,8 @@ class HomeScreen extends React.Component {
       currentItem: 0,
       items: [],
       itemNonJoin:[],
-      isModalVisible: false
+      isModalVisible: false,
+      isConfirmModalVisible: false
     }
 
     store.subscribe(
@@ -335,10 +336,20 @@ class HomeScreen extends React.Component {
       this.setState({
         isModalVisible: !this.state.isModalVisible
       });
-    }else{
-      console.log('go to naviation screen');
-      this.props.navigation.navigate('Details',{items: this.state.itemNonJoin})
+    }else{ //at least one thing is slected
+      this.setState({
+        isConfirmModalVisible: !this.state.isConfirmModalVisible
+      });
     }
+  }
+
+  goToNavigation(){
+    console.log('go to naviation screen');
+    this.props.navigation.navigate('Details',{items: this.state.itemNonJoin})
+  }
+
+  randomize(){
+    console.log('randomize');
   }
 
   static navigationOptions = {
@@ -353,30 +364,58 @@ class HomeScreen extends React.Component {
           <Text> Your Current Choices:  </Text>
           <Text> {this.state.items} </Text>
         </View>
-        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           <Text> Randomize your choices: </Text>
           <Button
             title="Let's Go"
             onPress={() => this.toggleModal()
             }/>
-          <Modal isVisible={this.state.isModalVisible}>
-            <View style={{height: Dimensions.get('window').width/2, width: Dimensions.get('window').height/2, 
-            flexDirection: 'column', alignItems: 'center', backgroundColor: 'white'
-            }}>
-              <Text style={{flex: 1, alignItems: 'center'}}>You need to select some food options before randomizing!</Text>
-              <Button
-                title="Ok! Bring me Back"
-                onPress={() => this.toggleModal()}
-                style={{flex: 1}}
-              />
-            </View>
-          </Modal>
 
           <Button
             title="Select All"
             onPress={() => store.dispatch(addAll())}
           />
         </View>
+
+        <Modal isVisible={this.state.isModalVisible}> 
+          <View style={{height: Dimensions.get('window').height/4, width: Dimensions.get('window').width/2, 
+          flexDirection: 'column', alignItems: 'center', backgroundColor: 'white'
+          }}>
+            <Text style={{flex: 1, alignItems: 'center'}}>You need to select some food options before randomizing!</Text>
+            <Button
+              title="Ok! Bring me Back"
+              onPress={() => this.toggleModal()}
+              style={{flex: 1}}
+            />
+          </View>
+        </Modal>
+        
+        <Modal isVisible={this.state.isConfirmModalVisible}>
+          <View style={{height: Dimensions.get('window').height/3, width: Dimensions.get('window').width*0.75,
+          flexDirection: 'column', alignItems: 'center', backgroundColor: 'white'}}>
+            <Text style={{flex: 1, alignItems: 'center'}}>
+              Randomized result: {this.state.items}
+            </Text>
+            <Button
+              title="Randomize Again!"
+              onPress={() => this.randomize()}
+              style={{flex: 1}}
+            />
+            <View style={{flexDirection: 'row'}}>
+              <Button 
+                title="Go Back"
+                onPress={() => this.toggleModal()}
+                style={{flex: 1}}
+              />
+
+              <Button
+                title="Search this option!"
+                onPress={() => this.goToNavigation()}
+                style={{flex: 1}}
+              />
+            </View>
+          </View>
+        </Modal>
         <View style={{ flex: 10, flexDirection: 'row', backgroundColor: 'lightgrey' }}>
           <Categories />
           <Options />
