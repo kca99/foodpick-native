@@ -70,11 +70,11 @@ class DetailsScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const items = navigation.getParam('items');
+    const items = navigation.getParam('randomizedItem');
     // console.log(items);
     // console.log(items[0])
-    const length = items.length;
-    var index = Math.floor((Math.random() * length));
+    // const length = items.length;
+    // var index = Math.floor((Math.random() * length));
     var latitude = this.state.latitude;
     var longitude = this.state.longitude;
 
@@ -98,7 +98,7 @@ class DetailsScreen extends React.Component {
                 onPress={() => this.props.navigation.goBack()}
               />
               <Text> You have randomed: </Text>
-              <Text> {items[index]}</Text>
+              <Text> {items}</Text>
               <Text> {this.state.errorMessage}</Text>
               <Text> {JSON.stringify(this.state.location)}</Text>
               <Button

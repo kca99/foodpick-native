@@ -313,8 +313,10 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
       currentItem: 0,
-      items: [],
+      items: [], //used to display what's currently selected in your current choices
+      itemsIndex: 0,
       itemNonJoin:[],
+      randomizedItem: '',
       isModalVisible: false,
       isConfirmModalVisible: false
     }
@@ -337,19 +339,33 @@ class HomeScreen extends React.Component {
         isModalVisible: !this.state.isModalVisible
       });
     }else{ //at least one thing is slected
+      //only randomize upon opening modal, don't need to randomize when closing (aka true)
+      if(this.state.isConfirmModalVisible === false) {
+        this.randomize();
+      }
       this.setState({
         isConfirmModalVisible: !this.state.isConfirmModalVisible
       });
     }
   }
 
-  goToNavigation(){
+  goToNavigation(selection){
     console.log('go to naviation screen');
-    this.props.navigation.navigate('Details',{items: this.state.itemNonJoin})
+    this.setState({
+      isConfirmModalVisible: !this.state.isConfirmModalVisible
+    });
+    this.props.navigation.navigate('Details',{randomizedItem: selection})
   }
 
   randomize(){
-    console.log('randomize');
+    console.log('randomizing...');
+    var randomNum = Math.floor(Math.random() * this.state.itemNonJoin.length);
+    this.setState({
+      itemsIndex: randomNum
+    })
+    // console.log(this.state.items);
+    // console.log(this.state.itemNonJoin.length);
+    // console.log(this.state.itemsIndex);
   }
 
   static navigationOptions = {
@@ -394,7 +410,10 @@ class HomeScreen extends React.Component {
           <View style={{height: Dimensions.get('window').height/3, width: Dimensions.get('window').width*0.75,
           flexDirection: 'column', alignItems: 'center', backgroundColor: 'white'}}>
             <Text style={{flex: 1, alignItems: 'center'}}>
-              Randomized result: {this.state.items}
+              Randomized result: 
+            </Text>
+            <Text style={{flex: 1, alignItems: 'center'}}>
+              {this.state.itemNonJoin[this.state.itemsIndex]}
             </Text>
             <Button
               title="Randomize Again!"
@@ -410,7 +429,7 @@ class HomeScreen extends React.Component {
 
               <Button
                 title="Search this option!"
-                onPress={() => this.goToNavigation()}
+                onPress={() => this.goToNavigation(this.state.itemNonJoin[this.state.itemsIndex])}
                 style={{flex: 1}}
               />
             </View>
