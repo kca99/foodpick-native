@@ -39,6 +39,10 @@ class DetailsScreen extends React.Component {
       //Check if location is actually on
       var provObj = await Expo.Location.getProviderStatusAsync();
       console.log("provObj: ", provObj)
+
+      const { navigation } = this.props;
+      const items = navigation.getParam('randomizedItem');
+
       if (provObj['gpsAvailable'] === false) { //Location is off you nitwits!
         this.setState({
           errorMessage: 'Please turn on location',
@@ -56,7 +60,7 @@ class DetailsScreen extends React.Component {
         // console.log(this.state.longitude)  
 
         //this works
-        const res = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?location=${this.state.latitude},${this.state.longitude}&radius=500&query=Korean&type=restaurant&key=AIzaSyCElZ2xXdBkiMP6Enrs-Ki8u0aF1sgp8R8`
+        const res = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?location=${this.state.latitude},${this.state.longitude}&radius=500&query=${items}&type=restaurant&key=AIzaSyCElZ2xXdBkiMP6Enrs-Ki8u0aF1sgp8R8`
         );
         res = await res.json();
          console.log(res)
@@ -97,8 +101,7 @@ class DetailsScreen extends React.Component {
                 title="Change Your Options"
                 onPress={() => this.props.navigation.goBack()}
               />
-              <Text> You have randomed: </Text>
-              <Text> {items}</Text>
+              <Text> You have selected: {items} </Text>
               <Text> {this.state.errorMessage}</Text>
               <Text> {JSON.stringify(this.state.location)}</Text>
               <Button
